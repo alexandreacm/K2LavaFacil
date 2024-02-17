@@ -1,23 +1,43 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
+import {Platform, SafeAreaView, StatusBar, StyleSheet} from 'react-native';
+import Navigation from './src/navigation';
+
+import {
+  useFonts,
+  Roboto_100Thin,
+  Roboto_300Light,
+  Roboto_400Regular,
+  Roboto_500Medium,
+  Roboto_700Bold,
+} from '@expo-google-fonts/roboto';
+import {ThemeProvider} from 'styled-components/native';
+import {theme} from './src/styles/theme';
+
+const isAndroid = Platform.OS == 'android' ? StatusBar.currentHeight : 0;
 
 export default function App() {
-  React.useEffect(() => {
-    SplashScreen.hide();
-  }, []);
+  const [fontsLoaded] = useFonts({
+    Roboto_100Thin,
+    Roboto_300Light,
+    Roboto_400Regular,
+    Roboto_500Medium,
+    Roboto_700Bold,
+  });
+
+  if (!fontsLoaded) return null;
 
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ThemeProvider theme={theme}>
+        <Navigation />
+      </ThemeProvider>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    paddingTop: isAndroid,
   },
 });

@@ -26,5 +26,9 @@ module.exports = {
         'react/prop-types': 'off',
         'no-param-reassign': 'off',
         'no-console': 'off',
+        'no-empty-function': 'off',
+        '@typescript-eslint/no-empty-function': 'off',
+        'react/display-name': 'off',
+        'react/prop-types': 'off',
     },
 };
