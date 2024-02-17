@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "K2LavaFacil",
+    "slug": "K2LavaFacil",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
