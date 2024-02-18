@@ -5,16 +5,20 @@ interface TextType extends TextProps {
   isDisabled: boolean;
 }
 
+type DataProps = {
+  id: string;
+  name: string;
+}
+
 const StyledContainer = styled.View`
  flex: 1;
- justify-content: center;
  align-items: center;
 `
 
 const Title = styled.Text`
 text-align: center;
 font-size: 25px;
-font-family: ${({ theme }) => theme.fonts.normal_title};
+font-family: ${({ theme }) => theme.FONTS.Rob_300};
 `
 
 const DisabledText = styled.Text<TextType>`
@@ -22,5 +26,7 @@ const DisabledText = styled.Text<TextType>`
   font-size: 12px;
   font-family: bold;
 `;
+
+// const CustomFlat = styled(FlatList as new (props: FlatListProps<DataProps>) => FlatList<DataProps>)``;
 
 export { Title, StyledContainer, DisabledText }

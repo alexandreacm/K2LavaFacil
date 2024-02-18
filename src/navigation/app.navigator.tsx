@@ -3,15 +3,17 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {Home} from '../screens/Home';
 import {ScheduleWashing} from '../screens/ScheduleWashing';
+import defaultTheme from '../styles/theme/default-theme';
+import {View} from 'react-native';
 
-const {Screen, Navigator} = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
   return (
-    <Navigator>
-      <Screen name="Home" component={Home} />
-      <Screen name="ScheduleWashing" component={ScheduleWashing} />
-    </Navigator>
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="ScheduleWashing" component={ScheduleWashing} />
+    </Stack.Navigator>
   );
 };
 

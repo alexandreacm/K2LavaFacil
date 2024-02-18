@@ -1,6 +1,7 @@
 import React from 'react';
 import {Platform, SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import Navigation from './src/navigation';
+import {ThemeProvider} from './src/components/ThemeProvider';
 
 import {
   useFonts,
@@ -10,8 +11,6 @@ import {
   Roboto_500Medium,
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto';
-import {ThemeProvider} from 'styled-components/native';
-import {theme} from './src/styles/theme';
 
 const isAndroid = Platform.OS == 'android' ? StatusBar.currentHeight : 0;
 
@@ -28,7 +27,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider>
         <Navigation />
       </ThemeProvider>
     </SafeAreaView>

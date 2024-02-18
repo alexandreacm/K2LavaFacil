@@ -1,11 +1,13 @@
 import React from 'react';
 import {ThemeProvider as DefaultThemeProvider} from 'styled-components/native';
-import {theme} from '../../styles/theme';
+import defaultTheme from '../../styles/theme/default-theme';
 
 type Props = {
   children: React.ReactNode;
 };
 
 export function ThemeProvider({children}: Props) {
-  return <DefaultThemeProvider theme={theme}>{children}</DefaultThemeProvider>;
+  return (
+    <DefaultThemeProvider theme={defaultTheme}>{children}</DefaultThemeProvider>
+  );
 }
