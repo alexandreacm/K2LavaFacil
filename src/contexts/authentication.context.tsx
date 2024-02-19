@@ -1,32 +1,62 @@
 import React, { createContext, useContext, useState } from 'react';
-import { IUser } from '../models';
+import { IContext, IUser } from '../models';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
-const AuthenticationContext = createContext({});
+const initialValue: IContext = {
+  isAuthenticated: false,
+  user: {
+    isAuthenticated: false,
+    name: '',
+    email: '',
+  },
+  isLoading: false,
+  error: '',
+  onSignIn(email, password) {},
+};
 
+const AuthenticationContext = createContext(initialValue);
 export const useAuthentication = () => useContext(AuthenticationContext);
 
 type Props = {
   children: React.ReactNode;
 };
 
-export function AuthProvider({ children }: Props) {
-  const [user, setUser] = useState<IUser>();
+export function AuthenticationProvider({ children }: Props) {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<IUser | undefined>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  function onSignIn() {
-    let localUser: IUser = {
-      isAuthenticated: false,
-      name: 'Alexandre',
-      email: 'teste@gmail.com',
-    };
+  const auth = getAuth();
 
-    setUser(localUser);
+  function onSignIn(email: string, password: string) {
+    setIsLoading(true);
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(userCredential => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        setIsAuthenticated(true);
+        // setUser(user);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        setIsLoading(false);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(`${errorCode}-${errorMessage}`);
+      });
   }
 
   return (
     <AuthenticationContext.Provider
-      value={{ isAuthenticated: !!user, onSignIn, user, isLoading, error }}>
+      value={{
+        isAuthenticated,
+        isLoading,
+        onSignIn,
+        user,
+      }}>
       {children}
     </AuthenticationContext.Provider>
   );

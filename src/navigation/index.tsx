@@ -1,21 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import AppNavigator from './app.navigator';
 import SplashScreen from 'react-native-splash-screen';
 import AuthNavigator from './auth.navigator';
+import { useAuthentication } from '../contexts/authentication.context';
 
 function Navigation() {
-  const [user, setUser] = useState<boolean>(true);
+  const { isAuthenticated, onSignIn } = useAuthentication();
 
   useEffect(() => {
     SplashScreen.hide();
   }, []);
 
-  return (
-    <NavigationContainer>
-      <AuthNavigator />
-    </NavigationContainer>
-  );
+  return !isAuthenticated ? <AuthNavigator /> : <AppNavigator />;
 }
 
 export default Navigation;

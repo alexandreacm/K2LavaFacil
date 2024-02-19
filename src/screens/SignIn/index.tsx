@@ -17,32 +17,33 @@ import {
 import { useAuthentication } from '../../contexts/authentication.context';
 
 export function SignIn() {
-  const { isAuthenticated, onSignIn, user } = useAuthentication();
-
-  console.log(user);
+  const { onSignIn } = useAuthentication();
 
   function handleSignIn() {
-    onSignIn();
+    onSignIn('admin@gmail.com', '102030');
   }
+
   return (
     <Container>
       <HeaderImage as={Animatable.View} animation="fadeInUp" duration={600}>
-        <Image source={icLogo} resizeMode="contain" />
+        <Image testID="imgLogo" source={icLogo} resizeMode="contain" />
       </HeaderImage>
 
       <ContainerForm as={Animatable.View} animation="fadeInDown">
-        <Label>Email</Label>
+        <Label testID="lblEmail">Email</Label>
         <Input placeholder="Digite seu email" />
 
-        <Label>Senha</Label>
+        <Label testID="lblPassword">Senha</Label>
         <Input placeholder="Digite sua senha" />
 
-        <SignInButton onPress={handleSignIn}>
-          <TextSignIn>Entrar</TextSignIn>
+        <SignInButton testID="btnSignIn" onPress={handleSignIn}>
+          <TextSignIn testID="lblSignIn">Entrar</TextSignIn>
         </SignInButton>
 
-        <ButtonRegister>
-          <TextBtnRegister>Não possui uma conta? Cadastre-se</TextBtnRegister>
+        <ButtonRegister testID="btnRegister">
+          <TextBtnRegister testID="lblRegister">
+            Não possui uma conta? Cadastre-se
+          </TextBtnRegister>
         </ButtonRegister>
       </ContainerForm>
     </Container>
