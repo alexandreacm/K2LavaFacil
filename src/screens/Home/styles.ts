@@ -1,24 +1,47 @@
-import { TextProps } from "react-native";
+import { TextProps, ViewProps } from "react-native";
 import styled, { css } from "styled-components/native";
 
 interface TextType extends TextProps {
   isDisabled: boolean;
 }
-
-type DataProps = {
-  id: string;
-  name: string;
+interface TitleType extends TextProps {
+  isFeatured?: boolean;
+}
+interface TextType extends TextProps {
+  isDisabled: boolean;
 }
 
-const StyledContainer = styled.View`
+interface HomeType extends ViewProps {
+  isPrimary?: boolean;
+}
+
+const Container = styled.ScrollView`
  flex: 1;
- align-items: center;
+ background-color: ${({ theme }) => theme.COLORS.ui.PRIMARY_800};
+ padding: 14px;
 `
 
-const Title = styled.Text`
-text-align: center;
-font-size: 25px;
-font-family: ${({ theme }) => theme.FONTS.Rob_300};
+const ViewSignIn = styled.View`
+ width: 100%;
+ background-color: ${({ theme }) => theme.COLORS.ui.PRIMARY_800};
+ padding: 10px;
+`
+
+const Title = styled.Text<TitleType>`
+text-align: left;
+font-size: 18px;
+font-family: ${({ theme }) => theme.FONTS.title};
+${({ theme, isFeatured }) => css`
+ color: ${isFeatured ? theme.COLORS.text.TITLE : theme.COLORS.text.BLACK}
+`}
+`
+
+const SubTitle = styled.Text`
+text-align: left;
+font-size: 20px;
+padding-bottom: 20px;
+font-family: ${({ theme }) => theme.FONTS.middle_title};
+margin-top: 10px;
 `
 
 const DisabledText = styled.Text<TextType>`
@@ -27,6 +50,76 @@ const DisabledText = styled.Text<TextType>`
   font-family: bold;
 `;
 
-// const CustomFlat = styled(FlatList as new (props: FlatListProps<DataProps>) => FlatList<DataProps>)``;
+const CardHome = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.8
+}) <HomeType>`
+  width: 100%;
+  padding: 40px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme, isPrimary }) => (isPrimary ? theme.COLORS.ui.HOME_PRIMARY_900 : theme.COLORS.ui.PRIMARY_900)};
+`
 
-export { Title, StyledContainer, DisabledText }
+const ViewTopInfo = styled.View`
+  padding-bottom: 50px;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const ViewBottomInfo = styled.View`
+   flex: 1;
+`;
+
+const CardTitle = styled.Text`
+text-align: left;
+margin-left: 10px;
+font-size: 20px;
+font-family: ${({ theme }) => theme.FONTS.title};
+color: ${({ theme }) => theme.COLORS.text.WHITE};
+`
+
+const TextAll = styled.Text`
+ font-size: 18px;
+ font-family: ${({ theme }) => theme.FONTS.Rob_300};
+ color: ${({ theme }) => theme.COLORS.ui.PRIMARY_600};
+ font-weight: normal;
+ `
+
+const TextSchedule = styled.Text`
+font-size: 16px;
+font-family: ${({ theme }) => theme.FONTS.large_title};
+color: ${({ theme }) => theme.COLORS.text.BLACK};
+ `
+const HelloText = styled.Text`
+font-size: 25px;
+font-family: ${({ theme }) => theme.FONTS.large_title};
+color: ${({ theme }) => theme.COLORS.text.BLACK};
+margin-left: 10px;
+margin-right: 12px;
+ `
+
+const ViewLastSchedules = styled.View`
+ flex-direction: row;
+ justify-content: space-between;
+ padding-top: 12px;
+`
+//const CustomFlat = styled(FlatList as new (props: FlatListProps<DataProps>) => FlatList<DataProps>)``;
+
+export {
+  Title,
+  Container,
+  DisabledText,
+  SubTitle,
+  ViewSignIn,
+  CardHome,
+  ViewTopInfo,
+  ViewBottomInfo,
+  CardTitle,
+  TextAll,
+  TextSchedule,
+  ViewLastSchedules,
+  HelloText
+}

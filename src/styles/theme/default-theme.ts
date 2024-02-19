@@ -4,14 +4,15 @@ export default {
         ui: {
             PRIMARY: '#161621',
             SECONDARY: '#C4C4C4',
-            BLACK: '#000',
-            ERROR: '#D0421B',
+            PRIMARY_900: '#f38c1d',
+            PRIMARY_800: "#F3F3F3",
+            PRIMARY_700: "#38A69D",
+            PRIMARY_600: '#D0421B',
             SUCCESS: '#138000',
             BUTTON: "#0C8CE9",
-            PRIMARY_900: '#f38c1d',
-            PRIMARY_COLOR: "#38A69D",
-            FORM: "#FFF",
             SUB_TITLE: "#a1a1a1",
+            HOME_PRIMARY_900: '#0a2034',
+            HOME_PRIMARY_800: '#37a8a1'
         },
         text: {
             WHITE: '#FFFFFF',

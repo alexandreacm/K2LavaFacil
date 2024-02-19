@@ -20,7 +20,7 @@ const HeaderImage = styled(View)`
 
 const ContainerForm = styled.View`
     flex: 1;
-    background-color: ${({ theme }) => theme.COLORS.ui.FORM};
+    background-color: ${({ theme }) => theme.COLORS.ui.PRIMARY_800};
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
     padding-left: 5%;
@@ -57,7 +57,7 @@ const SignInButton = styled.TouchableOpacity`
 const TextSignIn = styled.Text`
     font-size: 18px;
     font-weight: bold;
-    color: ${({ theme }) => theme.COLORS.ui.FORM};
+    color: ${({ theme }) => theme.COLORS.ui.PRIMARY_800};
 `
 
 const LabelError = styled.Text`
