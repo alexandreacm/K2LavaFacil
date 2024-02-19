@@ -60,6 +60,11 @@ const TextSignIn = styled.Text`
     color: ${({ theme }) => theme.COLORS.ui.FORM};
 `
 
+const LabelError = styled.Text`
+    font-size: 12px;
+    color: ${({ theme }) => theme.COLORS.text.ERROR};
+`;
+
 export {
     Label,
     Container,
@@ -69,5 +74,6 @@ export {
     ButtonRegister,
     TextBtnRegister,
     TextSignIn,
-    Input
+    Input,
+    LabelError
 }

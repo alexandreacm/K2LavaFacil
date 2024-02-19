@@ -1,5 +1,5 @@
 export interface IUser {
-    name: string | null;
+    displayName: string | null;
     email: string | null;
 }
 export interface IError {

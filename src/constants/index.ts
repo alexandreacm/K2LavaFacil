@@ -1,0 +1,1 @@
+export const KEY_K2_LF = '@k2lavafacil'

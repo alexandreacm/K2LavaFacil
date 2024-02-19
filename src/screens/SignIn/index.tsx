@@ -13,11 +13,12 @@ import {
   TextBtnRegister,
   TextSignIn,
   Input,
+  LabelError,
 } from './styles';
 import { useAuthentication } from '../../contexts/authentication.context';
 
 export function SignIn() {
-  const { onSignIn } = useAuthentication();
+  const { onSignIn, error, isLoading } = useAuthentication();
 
   function handleSignIn() {
     onSignIn('admin@gmail.com', '102030');
@@ -32,18 +33,12 @@ export function SignIn() {
       <ContainerForm as={Animatable.View} animation="fadeInDown">
         <Label testID="lblEmail">Email</Label>
         <Input placeholder="Digite seu email" />
-
         <Label testID="lblPassword">Senha</Label>
         <Input placeholder="Digite sua senha" />
-
-        <SignInButton
-          testID="btnSignIn"
-          onPress={() => {
-            handleSignIn();
-          }}>
+        {error && <LabelError>{error?.errorMessage}</LabelError>}
+        <SignInButton testID="btnSignIn" onPress={handleSignIn}>
           <TextSignIn testID="lblSignIn">Entrar</TextSignIn>
         </SignInButton>
-
         <ButtonRegister testID="btnRegister">
           <TextBtnRegister testID="lblRegister">
             Não possui uma conta? Cadastre-se

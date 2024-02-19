@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useState } from 'react';
 import { IContext, IError, IUser } from '../models';
 import { signInRequest } from '../services/authentication.service';
+import { saveData } from '../storage';
+import { KEY_K2_LF } from '../constants';
 
 const initialValue: IContext = {
   isAuthenticated: false,
   user: {
-    name: '',
+    displayName: '',
     email: '',
   },
   isLoading: false,
@@ -32,12 +34,9 @@ export function AuthenticationProvider({ children }: Props) {
       .then(userCredential => {
         // Signed in
         const user = userCredential.user;
-        console.log(userCredential);
+        saveData(KEY_K2_LF, user);
 
-        setUser({
-          name: user?.displayName,
-          email: user?.email,
-        });
+        setUser(user);
         setIsLoading(false);
       })
       .catch(err => {
@@ -48,7 +47,7 @@ export function AuthenticationProvider({ children }: Props) {
           errorCode,
           errorMessage,
         });
-        console.log(`${errorCode}-${errorMessage}`);
+        // console.log(`${errorCode}-${errorMessage}`);
       });
   }
 
