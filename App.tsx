@@ -1,7 +1,7 @@
 import React from 'react';
-import {Platform, SafeAreaView, StatusBar, StyleSheet} from 'react-native';
+import { Platform, SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import Navigation from './src/navigation';
-import {ThemeProvider} from './src/components/ThemeProvider';
+import { ThemeProvider } from './src/components/ThemeProvider';
 
 import {
   useFonts,
@@ -11,6 +11,7 @@ import {
   Roboto_500Medium,
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto';
+import { AuthProvider } from './src/contexts/authentication.context';
 
 const isAndroid = Platform.OS == 'android' ? StatusBar.currentHeight : 0;
 
@@ -28,7 +29,9 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <ThemeProvider>
-        <Navigation />
+        <AuthProvider>
+          <Navigation />
+        </AuthProvider>
       </ThemeProvider>
     </SafeAreaView>
   );
