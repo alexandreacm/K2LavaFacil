@@ -1,17 +1,16 @@
 import React, { createContext, useContext, useState } from 'react';
-import { IContext, IUser } from '../models';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { IContext, IError, IUser } from '../models';
+import { signInRequest } from '../services/authentication.service';
 
 const initialValue: IContext = {
   isAuthenticated: false,
   user: {
-    isAuthenticated: false,
     name: '',
     email: '',
   },
   isLoading: false,
-  error: '',
-  onSignIn(email, password) {},
+  error: { errorCode: 0, errorMessage: '' },
+  onSignIn() {},
 };
 
 const AuthenticationContext = createContext(initialValue);
@@ -22,29 +21,33 @@ type Props = {
 };
 
 export function AuthenticationProvider({ children }: Props) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<IUser | undefined>();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const auth = getAuth();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<IError | undefined>();
 
   function onSignIn(email: string, password: string) {
     setIsLoading(true);
 
-    signInWithEmailAndPassword(auth, email, password)
+    signInRequest(email, password)
       .then(userCredential => {
         // Signed in
         const user = userCredential.user;
-        console.log(user);
-        setIsAuthenticated(true);
-        // setUser(user);
+        console.log(userCredential);
+
+        setUser({
+          name: user?.displayName,
+          email: user?.email,
+        });
         setIsLoading(false);
       })
-      .catch(error => {
+      .catch(err => {
         setIsLoading(false);
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        const errorCode = err.code;
+        const errorMessage = err.message;
+        setError({
+          errorCode,
+          errorMessage,
+        });
         console.log(`${errorCode}-${errorMessage}`);
       });
   }
@@ -52,10 +55,11 @@ export function AuthenticationProvider({ children }: Props) {
   return (
     <AuthenticationContext.Provider
       value={{
-        isAuthenticated,
+        isAuthenticated: !!user,
         isLoading,
         onSignIn,
         user,
+        error,
       }}>
       {children}
     </AuthenticationContext.Provider>

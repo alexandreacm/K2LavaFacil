@@ -36,7 +36,11 @@ export function SignIn() {
         <Label testID="lblPassword">Senha</Label>
         <Input placeholder="Digite sua senha" />
 
-        <SignInButton testID="btnSignIn" onPress={handleSignIn}>
+        <SignInButton
+          testID="btnSignIn"
+          onPress={() => {
+            handleSignIn();
+          }}>
           <TextSignIn testID="lblSignIn">Entrar</TextSignIn>
         </SignInButton>
 

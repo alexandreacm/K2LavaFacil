@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import AppNavigator from './app.navigator';
 import SplashScreen from 'react-native-splash-screen';
+import { NavigationContainer } from '@react-navigation/native';
+
+import AppNavigator from './app.navigator';
 import AuthNavigator from './auth.navigator';
+
 import { useAuthentication } from '../contexts/authentication.context';
 
 function Navigation() {
@@ -11,7 +14,11 @@ function Navigation() {
     SplashScreen.hide();
   }, []);
 
-  return !isAuthenticated ? <AuthNavigator /> : <AppNavigator />;
+  return (
+    <NavigationContainer>
+      {!isAuthenticated ? <AuthNavigator /> : <AppNavigator />}
+    </NavigationContainer>
+  );
 }
 
 export default Navigation;

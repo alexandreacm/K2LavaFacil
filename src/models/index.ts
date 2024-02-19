@@ -1,12 +1,15 @@
 export interface IUser {
-    isAuthenticated: boolean;
-    name: string;
-    email: string;
+    name: string | null;
+    email: string | null;
+}
+export interface IError {
+    errorCode: number;
+    errorMessage: string;
 }
 export interface IContext {
     isAuthenticated: boolean
     user?: IUser
     isLoading: boolean;
-    error?: string,
+    error?: IError,
     onSignIn: (email: string, password: string) => void
 }

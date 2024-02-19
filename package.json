@@ -11,7 +11,8 @@
     "test": "jest --verbose",
     "test-report": "jest --collect-coverage",
     "test-cover": "jest --colletCoverage",
-    "commit": "cz"
+    "commit": "cz",
+    "pod-install": "RCT_NEW_ARCH_ENABLED=1 bundle exec pod install"
   },
   "dependencies": {
     "@expo-google-fonts/roboto": "^0.2.3",
