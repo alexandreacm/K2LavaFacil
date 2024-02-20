@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Input,
@@ -10,14 +10,29 @@ import {
   ButtonNewSchedule,
   LabelButtonNewSchedule,
   PressableVehicle,
+  LabelError,
 } from './styles';
-import { vehicleTypes, washTypes } from '../../constants';
+import { KEY_K2_LF_DATA, vehicleTypes, washTypes } from '../../constants';
+import { Controller, useForm } from 'react-hook-form';
+import { IFormData } from '../../models';
+import { saveData, loadData, containsKey } from '../../storage';
 
 export function ScheduleWashing() {
   const [isSelectionOn, setSelectionOn] = useState(false);
+  const [listAppointments, setListAppointments] = useState<IFormData[]>([]);
   const [isTypeCarSelected, setIsTypeCarSelected] = useState(false);
   const [washType, setWashType] = useState('');
   const [typeVehicle, setTypeVehicle] = useState('');
+
+  const regexPlaca = /^[A-Z]{3}[0-9]{4}$/;
+  const mercosulPlateRegex = /^[A-Z]{3}[0-9]{1}[a-zA-Z]{1}[0-9]{2}$/;
+  const regexPlacaMercosulMoto = /^[A-Z]{3}[0-9]{2}[a-zA-Z]{1}[0-9]{1}$/;
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormData>();
 
   function handleSelectWashType(type: string) {
     setSelectionOn(!isSelectionOn);
@@ -29,17 +44,97 @@ export function ScheduleWashing() {
     setTypeVehicle(typeVehicle);
   }
 
+  const onSubmit = (data: IFormData) => {
+    setListAppointments([...listAppointments, data]);
+  };
+
+  useEffect(() => {
+    console.log('LOADING DATA..');
+    async function loadVehicleAppointments() {
+      const isKeyTask = await containsKey(KEY_K2_LF_DATA);
+      const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
+
+      if (isKeyTask && vehiclesAppointments !== null) {
+        setListAppointments(vehiclesAppointments);
+      }
+    }
+
+    loadVehicleAppointments();
+  }, []);
+
+  useEffect(() => {
+    console.log('SAVE DATA..');
+
+    async function saveVehicleAppointments() {
+      if (listAppointments.length > 0) {
+        await saveData(KEY_K2_LF_DATA, listAppointments);
+      }
+    }
+
+    saveVehicleAppointments();
+  }, [listAppointments]);
+
   return (
     <Container>
-      <Input width={100} testID="input_placa" placeholder="Informe sua placa" />
+      <Controller
+        control={control}
+        rules={{
+          required: true,
+          pattern: mercosulPlateRegex,
+        }}
+        render={({ field: { onChange, value } }) => (
+          <Input
+            width={100}
+            testID="vehiclePlate"
+            placeholder="Informe sua placa"
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="vehiclePlate"
+      />
+
+      {errors.vehiclePlate && (
+        <LabelError>
+          {errors.vehiclePlate.type == 'pattern'
+            ? 'Placa inválida'
+            : 'Placa do veiculo é obrigatória.'}
+        </LabelError>
+      )}
 
       <ViewForm>
-        <Input width={50} testID="input_placa" placeholder="Data" />
-        <Input
-          isMarginLeft
-          width={50}
-          testID="input_placa"
-          placeholder="Hora"
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              width={50}
+              testID="date"
+              placeholder="Data"
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name="date"
+        />
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              isMarginLeft
+              width={50}
+              testID="hour"
+              placeholder="Hora"
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name="hour"
         />
       </ViewForm>
 
@@ -87,7 +182,7 @@ export function ScheduleWashing() {
         )}
       </PressableContainer>
 
-      <ButtonNewSchedule>
+      <ButtonNewSchedule onPress={handleSubmit(onSubmit)}>
         <LabelButtonNewSchedule>Novo Agendamento</LabelButtonNewSchedule>
       </ButtonNewSchedule>
     </Container>

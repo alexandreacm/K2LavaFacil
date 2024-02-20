@@ -91,7 +91,18 @@ text-align: left;
 font-size: 18px;
 font-family: ${({ theme }) => theme.FONTS.middle_title};
 ${({ theme }) => css`
- color: ${theme.COLORS.text.WHITE}
+ color: ${theme.COLORS.text.WHITE};
+`}
+`;
+
+const LabelError = styled.Text`
+width: 100%;
+line-height: 20px;
+text-align: left;
+font-size: 16px;
+font-family: ${({ theme }) => theme.FONTS.Rob_300};
+${({ theme }) => css`
+ color: ${theme.COLORS.text.ERROR};
 `}
 `
 
@@ -105,5 +116,6 @@ export {
   PressableContainer,
   ButtonNewSchedule,
   LabelButtonNewSchedule,
-  PressableVehicle
+  PressableVehicle,
+  LabelError
 }

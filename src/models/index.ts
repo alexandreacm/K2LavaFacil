@@ -13,3 +13,12 @@ export interface IContext {
     error?: IError,
     onSignIn: (email: string, password: string) => void
 }
+
+export type IFormData = {
+    vehiclePlate: string;
+    date: string;
+    hour: string;
+    washingType: string;
+    vehicleType: string;
+    washingStatus: string;
+}

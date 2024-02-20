@@ -18,4 +18,17 @@ async function loadData(key: string) {
     }
 }
 
-export { saveData, loadData }
+const containsKey = async (key: string): Promise<boolean> => {
+    let containKey: boolean = false;
+    try {
+        let allKeys = await AsyncStorage.getAllKeys();
+        containKey = allKeys.includes(key);
+
+    } catch (e: any) {
+        console.error(e.message);
+    }
+
+    return containKey;
+}
+
+export { saveData, loadData, containsKey }

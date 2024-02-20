@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
@@ -18,10 +18,13 @@ import {
 import { useAuthentication } from '../../contexts/authentication.context';
 
 export function SignIn() {
+  const [email, setEmail] = useState('admin@gmail.com');
+  const [password, setPassword] = useState('102030');
+
   const { onSignIn, error, isLoading } = useAuthentication();
 
   function handleSignIn() {
-    onSignIn('admin@gmail.com', '102030');
+    onSignIn(email, password);
   }
 
   return (
@@ -32,13 +35,26 @@ export function SignIn() {
 
       <ContainerForm as={Animatable.View} animation="fadeInDown">
         <Label testID="lblEmail">Email</Label>
-        <Input placeholder="Digite seu email" />
+        <Input
+          placeholder="Digite seu email"
+          onChangeText={setEmail}
+          value={email}
+        />
+
         <Label testID="lblPassword">Senha</Label>
-        <Input placeholder="Digite sua senha" />
+        <Input
+          placeholder="Digite sua senha"
+          onChangeText={setPassword}
+          value={password}
+          secureTextEntry
+        />
+
         {error && <LabelError>{error?.errorMessage}</LabelError>}
+
         <SignInButton testID="btnSignIn" onPress={handleSignIn}>
           <TextSignIn testID="lblSignIn">Entrar</TextSignIn>
         </SignInButton>
+
         <ButtonRegister testID="btnRegister">
           <TextBtnRegister testID="lblRegister">
             Não possui uma conta? Cadastre-se
