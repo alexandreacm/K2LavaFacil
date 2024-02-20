@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Container,
   Title,
+  Label,
   SubTitle,
   CardTitle,
   CardHome,
@@ -13,15 +14,32 @@ import {
   ViewLastSchedules,
   HelloText,
   TouchAllAppointments,
+  ContainerLastAppointments,
 } from './styles';
-import { IUser } from '../../models';
-import { KEY_K2_LF } from '../../constants';
-import { loadData } from '../../storage';
+import { IFormData, IUser } from '../../models';
+import { KEY_K2_LF, KEY_K2_LF_DATA } from '../../constants';
+import { containsKey, loadData } from '../../storage';
 import { MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
+import CardAppointmentItem from '../../components/AppointmentList';
 
 export function Home({ navigation }: NativeStackHeaderProps) {
   const [user, setUser] = useState<IUser>();
+
+  const [appointmentData, setAppointmentsData] = useState<IFormData[]>([]);
+
+  useEffect(() => {
+    async function loadVehicleAppointments() {
+      const isKeyTask = await containsKey(KEY_K2_LF_DATA);
+      const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
+
+      if (isKeyTask && vehiclesAppointments !== null) {
+        setAppointmentsData(vehiclesAppointments);
+      }
+    }
+
+    loadVehicleAppointments();
+  }, []);
 
   useEffect(() => {
     async function loadLocalData() {
@@ -67,6 +85,17 @@ export function Home({ navigation }: NativeStackHeaderProps) {
           <TextAll>Ver todos</TextAll>
         </TouchAllAppointments>
       </ViewLastSchedules>
+
+      <ContainerLastAppointments>
+        {appointmentData &&
+          appointmentData.map((item, idx) => {
+            return <CardAppointmentItem key={idx} item={item} />;
+          })}
+
+        {!appointmentData.length && (
+          <Label align="center">Não há agendamentos</Label>
+        )}
+      </ContainerLastAppointments>
     </Container>
   );
 }

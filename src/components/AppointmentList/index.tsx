@@ -7,6 +7,9 @@ import {
   Label,
   Text,
   ContainerDataHour,
+  OperationButton,
+  LabelOperation,
+  ContainerOperation,
 } from './styles';
 import { IFormData } from '../../models';
 
@@ -47,6 +50,16 @@ const CardAppointmentItem = ({ item }: FlatListProps) => {
           Tipo Lavagem: <Text>Simples / Carro</Text>
         </Label>
       </ContainerDataHour>
+
+      <ContainerOperation>
+        <OperationButton isCancel>
+          <LabelOperation isCancel>Cancelar</LabelOperation>
+        </OperationButton>
+
+        <OperationButton>
+          <LabelOperation>Finalizar</LabelOperation>
+        </OperationButton>
+      </ContainerOperation>
     </CardAppointment>
   );
 };

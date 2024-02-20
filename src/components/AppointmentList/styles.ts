@@ -2,13 +2,17 @@ import styled, { css } from "styled-components/native";
 import defaultTheme from "../../styles/theme/default-theme";
 
 interface IStatus {
-    status: string;
+  status: string;
+}
+
+interface IOperation {
+  isCancel?: boolean;
 }
 
 const washingStatus: any = {
-    awaiting: defaultTheme.COLORS.status.awaiting,
-    cancel: defaultTheme.COLORS.status.cancel,
-    finished: defaultTheme.COLORS.status.finish
+  awaiting: defaultTheme.COLORS.status.awaiting,
+  cancel: defaultTheme.COLORS.status.cancel,
+  finished: defaultTheme.COLORS.status.finish
 };
 
 const Text = styled.Text`
@@ -65,11 +69,39 @@ font-family: ${({ theme }) => theme.FONTS.title};
 color: ${({ theme }) => theme.COLORS.text.WHITE};
 `;
 
+
+const LabelOperation = styled.Text<IOperation>`
+width: 100%;
+text-align: center;
+font-size: 12px;
+font-family: ${({ theme }) => theme.FONTS.title};
+color: ${({ theme }) => theme.COLORS.text.WHITE};
+`;
+
+const OperationButton = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.8
+}) <IOperation>`
+  width: 160px;
+  padding: 6px;
+  background: ${({ theme, isCancel }) => isCancel ? theme.COLORS.status.cancel : theme.COLORS.status.finish};
+  border-radius: 10px;
+`;
+
+const ContainerOperation = styled.View`
+  width: 100%;
+  flex-direction: row; 
+  justify-content: space-around; 
+  margin-top: 16px;  
+`;
+
 export {
-    Text,
-    Label,
-    ContainerDataHour,
-    CardAppointment,
-    AppointmentStatus,
-    LabelAppointmentStatus
+  Text,
+  Label,
+  ContainerDataHour,
+  CardAppointment,
+  AppointmentStatus,
+  LabelAppointmentStatus,
+  OperationButton,
+  LabelOperation,
+  ContainerOperation
 }

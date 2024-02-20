@@ -1,5 +1,6 @@
-import { TextProps, ViewProps } from "react-native";
+import { FlatList, FlatListProps, TextProps, ViewProps } from "react-native";
 import styled, { css } from "styled-components/native";
+import { IFormData } from "../../models";
 
 interface TextType extends TextProps {
   isDisabled: boolean;
@@ -30,6 +31,10 @@ const ViewSignIn = styled.View`
  padding: 10px;
 `
 
+interface ILabel {
+  align: string
+}
+
 const Title = styled.Text<TitleType>`
 text-align: left;
 font-size: 18px;
@@ -38,6 +43,16 @@ ${({ theme, isFeatured }) => css`
  color: ${isFeatured ? theme.COLORS.text.TITLE : theme.COLORS.text.BLACK}
 `}
 `
+
+const Label = styled.Text<ILabel>`
+width: 100%;
+text-align: ${({ align }) => align ? align : 'left'};
+font-size: 16px;
+margin-bottom: 2px;
+font-family: ${({ theme }) => theme.FONTS.large_title};
+color: ${({ theme }) => theme.COLORS.ui.HOME_PRIMARY_900};
+`;
+
 
 const SubTitle = styled.Text`
 text-align: left;
@@ -113,7 +128,16 @@ const ViewLastSchedules = styled.View`
  justify-content: space-between;
  padding-top: 12px;
 `
-//const CustomFlat = styled(FlatList as new (props: FlatListProps<DataProps>) => FlatList<DataProps>)``;
+
+const AppointmentFlatList = styled(FlatList as new (props: FlatListProps<IFormData>) => FlatList<IFormData>)
+  .attrs({
+    contentContainerStyle: { marginTop: 15 }
+  })``;
+
+const ContainerLastAppointments = styled.View`
+  flex: 1;
+  margin-top: 16px;
+`;
 
 export {
   Title,
@@ -129,5 +153,8 @@ export {
   TextSchedule,
   ViewLastSchedules,
   HelloText,
-  TouchAllAppointments
+  TouchAllAppointments,
+  AppointmentFlatList,
+  ContainerLastAppointments,
+  Label
 }
