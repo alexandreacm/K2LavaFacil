@@ -4,15 +4,18 @@ import styled, { css } from "styled-components/native";
 interface TextType extends TextProps {
   isDisabled: boolean;
 }
-interface TitleType extends TextProps {
+export interface TitleType extends TextProps {
   isFeatured?: boolean;
 }
 interface TextType extends TextProps {
   isDisabled: boolean;
 }
 
-interface HomeType extends ViewProps {
+interface TypeHome extends ViewProps {
   isPrimary?: boolean;
+}
+interface CardTitleType extends TextProps {
+  isPrimaryColor?: boolean;
 }
 
 const Container = styled.ScrollView`
@@ -45,14 +48,14 @@ margin-top: 10px;
 `
 
 const DisabledText = styled.Text<TextType>`
-  color: ${({ theme, isDisabled }) => (isDisabled ? theme.colors.button.PRIMARY : theme.colors.button.SECONDARY)};
+  color: ${({ theme, isDisabled }) => (isDisabled ? theme.COLORS.button.PRIMARY : theme.COLORS.button.SECONDARY)};
   font-size: 12px;
   font-family: bold;
 `;
 
 const CardHome = styled.TouchableOpacity.attrs({
   activeOpacity: 0.8
-}) <HomeType>`
+}) <TypeHome>`
   width: 100%;
   padding: 40px;
   margin-bottom: 15px;
@@ -73,12 +76,12 @@ const ViewBottomInfo = styled.View`
    flex: 1;
 `;
 
-const CardTitle = styled.Text`
+const CardTitle = styled.Text<CardTitleType>`
 text-align: left;
 margin-left: 10px;
 font-size: 20px;
 font-family: ${({ theme }) => theme.FONTS.title};
-color: ${({ theme }) => theme.COLORS.text.WHITE};
+color: ${({ theme, isPrimaryColor }) => isPrimaryColor ? theme.COLORS.text.BLACK : theme.COLORS.text.WHITE};
 `
 
 const TextAll = styled.Text`

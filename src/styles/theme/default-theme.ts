@@ -8,9 +8,9 @@ export default {
             PRIMARY_800: "#F3F3F3",
             PRIMARY_700: "#38A69D",
             PRIMARY_600: '#D0421B',
+            PRIMARY_500: "#a1a1a1",
             SUCCESS: '#138000',
             BUTTON: "#0C8CE9",
-            SUB_TITLE: "#a1a1a1",
             HOME_PRIMARY_900: '#0a2034',
             HOME_PRIMARY_800: '#37a8a1'
         },

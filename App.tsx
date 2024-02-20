@@ -1,5 +1,11 @@
 import React from 'react';
-import { Platform, SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import {
+  Platform,
+  View,
+  StatusBar,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
 import Navigation from './src/navigation';
 import { ThemeProvider } from './src/components/ThemeProvider';
 
