@@ -6,6 +6,7 @@ import { ScheduleWashing } from '../screens/ScheduleWashing';
 import defaultTheme from '../styles/theme/default-theme';
 import { View } from 'react-native';
 import { useTheme } from 'styled-components/native';
+import Appointments from '../screens/Appointments';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,20 @@ const AppNavigator = () => {
         component={ScheduleWashing}
         options={{
           title: 'Agendar Lavagem',
+          headerStyle: {
+            backgroundColor: COLORS.ui.PRIMARY_900,
+          },
+          headerTintColor: COLORS.text.WHITE,
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Appointments"
+        component={Appointments}
+        options={{
+          title: 'Últimos Agendamentos',
           headerStyle: {
             backgroundColor: COLORS.ui.PRIMARY_900,
           },

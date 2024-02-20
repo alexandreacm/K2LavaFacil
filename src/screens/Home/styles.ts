@@ -89,7 +89,11 @@ const TextAll = styled.Text`
  font-family: ${({ theme }) => theme.FONTS.Rob_300};
  color: ${({ theme }) => theme.COLORS.ui.PRIMARY_600};
  font-weight: normal;
- `
+ `;
+
+const TouchAllAppointments = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.9
+})``;
 
 const TextSchedule = styled.Text`
 font-size: 16px;
@@ -124,5 +128,6 @@ export {
   TextAll,
   TextSchedule,
   ViewLastSchedules,
-  HelloText
+  HelloText,
+  TouchAllAppointments
 }

@@ -15,14 +15,22 @@ import {
 import { KEY_K2_LF_DATA, vehicleTypes, washTypes } from '../../constants';
 import { Controller, useForm } from 'react-hook-form';
 import { IFormData } from '../../models';
-import { saveData, loadData, containsKey } from '../../storage';
+import {
+  saveData,
+  loadData,
+  containsKey,
+  deleteAllStorage,
+} from '../../storage';
+import { useNavigation } from '@react-navigation/native';
 
 export function ScheduleWashing() {
   const [isSelectionOn, setSelectionOn] = useState(false);
-  const [listAppointments, setListAppointments] = useState<IFormData[]>([]);
+  const [appointmentData, setAppointmentsData] = useState<IFormData[]>([]);
+
   const [isTypeCarSelected, setIsTypeCarSelected] = useState(false);
   const [washType, setWashType] = useState('');
   const [typeVehicle, setTypeVehicle] = useState('');
+  const { goBack } = useNavigation();
 
   const regexPlaca = /^[A-Z]{3}[0-9]{4}$/;
   const mercosulPlateRegex = /^[A-Z]{3}[0-9]{1}[a-zA-Z]{1}[0-9]{2}$/;
@@ -45,17 +53,20 @@ export function ScheduleWashing() {
   }
 
   const onSubmit = (data: IFormData) => {
-    setListAppointments([...listAppointments, data]);
+    setAppointmentsData([...appointmentData, data]);
+    goBack();
   };
 
   useEffect(() => {
-    console.log('LOADING DATA..');
+    // deleteAllStorage();
+    console.log('useEffect LOAD..');
+
     async function loadVehicleAppointments() {
       const isKeyTask = await containsKey(KEY_K2_LF_DATA);
       const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
 
       if (isKeyTask && vehiclesAppointments !== null) {
-        setListAppointments(vehiclesAppointments);
+        setAppointmentsData(vehiclesAppointments);
       }
     }
 
@@ -63,16 +74,16 @@ export function ScheduleWashing() {
   }, []);
 
   useEffect(() => {
-    console.log('SAVE DATA..');
+    console.log('useEffect SAVE..');
 
     async function saveVehicleAppointments() {
-      if (listAppointments.length > 0) {
-        await saveData(KEY_K2_LF_DATA, listAppointments);
+      if (appointmentData.length > 0) {
+        await saveData(KEY_K2_LF_DATA, appointmentData);
       }
     }
 
     saveVehicleAppointments();
-  }, [listAppointments]);
+  }, [appointmentData]);
 
   return (
     <Container>

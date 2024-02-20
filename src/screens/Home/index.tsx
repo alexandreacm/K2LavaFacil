@@ -12,6 +12,7 @@ import {
   TextSchedule,
   ViewLastSchedules,
   HelloText,
+  TouchAllAppointments,
 } from './styles';
 import { IUser } from '../../models';
 import { KEY_K2_LF } from '../../constants';
@@ -61,7 +62,10 @@ export function Home({ navigation }: NativeStackHeaderProps) {
 
       <ViewLastSchedules>
         <TextSchedule>Últimos Agendamentos</TextSchedule>
-        <TextAll>Ver todos</TextAll>
+        <TouchAllAppointments
+          onPress={() => navigation.navigate('Appointments')}>
+          <TextAll>Ver todos</TextAll>
+        </TouchAllAppointments>
       </ViewLastSchedules>
     </Container>
   );

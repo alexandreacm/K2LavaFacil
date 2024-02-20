@@ -21,6 +21,11 @@ export default {
             SUCCESS: '#138000',
             TITLE: "#0C8CE9",
         },
+        status: {
+            awaiting: "#0C8CE9",
+            cancel: '#D0421B',
+            finish: '#138000',
+        },
         button: {
             PRIMARY: '#161621',
             SECONDARY: '#C4C4C4',

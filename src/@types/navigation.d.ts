@@ -4,5 +4,6 @@ export declare global {
             SignIn: undefined;
             Home: undefined;
             ScheduleWashing: undefined;
+            Appointments: undefined;
         }
     }
