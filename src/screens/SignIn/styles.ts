@@ -33,7 +33,7 @@ const ButtonRegister = styled.TouchableOpacity`
 `
 
 const TextBtnRegister = styled.Text`
-    color: ${({ theme }) => theme.COLORS.ui.SUB_TITLE}
+    color: ${({ theme }) => theme.COLORS.ui.PRIMARY_500}
 `
 
 const Input = styled.TextInput`

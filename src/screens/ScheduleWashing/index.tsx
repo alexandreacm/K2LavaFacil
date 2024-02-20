@@ -40,7 +40,16 @@ export function ScheduleWashing() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormData>();
+  } = useForm<IFormData>({
+    defaultValues: {
+      vehiclePlate: 'IRI8B77',
+      date: '20/02/2024',
+      hour: '17:00',
+      washingType: 'Simples',
+      vehicleType: 'Carro',
+      washingStatus: 'awaiting',
+    },
+  });
 
   function handleSelectWashType(type: string) {
     setSelectionOn(!isSelectionOn);
@@ -54,7 +63,6 @@ export function ScheduleWashing() {
 
   const onSubmit = (data: IFormData) => {
     setAppointmentsData([...appointmentData, data]);
-    goBack();
   };
 
   useEffect(() => {
