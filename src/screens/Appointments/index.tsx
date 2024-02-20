@@ -1,5 +1,5 @@
 //import liraries
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   ContainerDataHour,
@@ -12,32 +12,37 @@ import {
 } from './styles';
 import { IFormData } from '../../models';
 import { KEY_K2_LF_DATA } from '../../constants';
-import { containsKey, loadData, saveData } from '../../storage';
+import { containsKey, loadData } from '../../storage';
 import { useFocusEffect } from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
 
 const Appointments = () => {
   const [appointmentData, setAppointmentsData] = useState<IFormData[]>([]);
 
-  async function loadVehicleAppointments() {
-    const isKeyTask = await containsKey(KEY_K2_LF_DATA);
-    const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
+  useEffect(() => {
+    async function loadVehicleAppointments() {
+      const isKeyTask = await containsKey(KEY_K2_LF_DATA);
+      const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
 
-    if (isKeyTask && vehiclesAppointments !== null) {
-      console.log(vehiclesAppointments.length);
-      setAppointmentsData(vehiclesAppointments);
+      if (isKeyTask && vehiclesAppointments !== null) {
+        console.log(vehiclesAppointments.length);
+        setAppointmentsData(vehiclesAppointments);
+      }
     }
-  }
 
-  useFocusEffect(
-    React.useCallback(() => {
-      console.log('useEffect LOADING DATA..');
-      loadVehicleAppointments();
-    }, []),
-  );
+    loadVehicleAppointments();
+  }, []);
+
+  //   useFocusEffect(
+  //     React.useCallback(() => {
+  //       console.log('useEffect LOADING DATA..');
+  //       loadVehicleAppointments();
+  //     }, []),
+  //   );
 
   const renderItem = ({ item }) => {
     return (
-      <CardAppointment>
+      <CardAppointment style={styles.border}>
         <AppointmentStatus>
           <LabelAppointmentStatus>Aguardando</LabelAppointmentStatus>
         </AppointmentStatus>
@@ -54,6 +59,12 @@ const Appointments = () => {
             </Text>
           </Label>
         </ContainerDataHour>
+
+        <ContainerDataHour>
+          <Label>
+            Tipo Lavagem: <Text>Simples / Carro</Text>
+          </Label>
+        </ContainerDataHour>
       </CardAppointment>
     );
   };
@@ -67,5 +78,15 @@ const Appointments = () => {
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  border: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 6,
+  },
+});
 
 export default Appointments;

@@ -5,7 +5,8 @@ import { TitleType } from "../Home/styles";
 const Container = styled.View`
  flex: 1;
  justify-content: center;
- padding: 10px;
+ padding: 8px;
+ background-color: ${({ theme }) => theme.COLORS.ui.SECONDARY_900};
 `
 const Text = styled.Text`
 width: 100%;
@@ -19,8 +20,7 @@ const Label = styled.Text`
 width: 100%;
 text-align: left;
 font-size: 16px;
-margin-top: 3px;
-margin-bottom: 3px;
+margin-bottom: 2px;
 font-family: ${({ theme }) => theme.FONTS.large_title};
 color: ${({ theme }) => theme.COLORS.ui.HOME_PRIMARY_900};
 `;
@@ -31,16 +31,20 @@ const ContainerDataHour = styled.View`
 `;
 
 const CardAppointment = styled.View`
-  flex: 1;
+  width: 100%;
   padding: 12px;
   justify-content: center;
-  border-top-width: 1px;
-  border-top-color: ${({ theme }) => theme.COLORS.ui.PRIMARY_500};
-  border-bottom-color: ${({ theme }) => theme.COLORS.ui.PRIMARY_500};
+  border-width: 1px;
+  border-color: ${({ theme }) => theme.COLORS.ui.PRIMARY_500};
+  background-color: ${({ theme }) => theme.COLORS.ui.SECONDARY_900};
+  border-radius: 10px;
+  margin-bottom: 12px;
 `;
+
 const AppointmentFlatList = styled.FlatList.attrs({
   contentContainerStyle: { marginTop: 15 }
-})``;
+})`
+`;
 
 const AppointmentStatus = styled.View`
   width: 100px;
@@ -48,15 +52,16 @@ const AppointmentStatus = styled.View`
   border-radius: 16px;
   justify-content: center;
   align-items:center;
-  background-color: ${({ theme }) => theme.COLORS.status.cancel};
+  background-color: ${({ theme }) => theme.COLORS.status.finish};
+  margin-bottom: 8px;
 `;
 
 const LabelAppointmentStatus = styled.Text`
-width: 100%;
-text-align: center;
-font-size: 14px;
-font-family: ${({ theme }) => theme.FONTS.title};
-color: ${({ theme }) => theme.COLORS.text.WHITE};
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-family: ${({ theme }) => theme.FONTS.title};
+  color: ${({ theme }) => theme.COLORS.text.WHITE};
 `;
 
 
