@@ -81,16 +81,17 @@ color: ${({ theme }) => theme.COLORS.text.WHITE};
 const OperationButton = styled.TouchableOpacity.attrs({
   activeOpacity: 0.8
 }) <IOperation>`
-  width: 160px;
-  padding: 6px;
+  width: 50%;
+  padding: 8px;
   background: ${({ theme, isCancel }) => isCancel ? theme.COLORS.status.cancel : theme.COLORS.status.finish};
   border-radius: 10px;
+  margin-left: 2px;
 `;
 
 const ContainerOperation = styled.View`
   width: 100%;
   flex-direction: row; 
-  justify-content: space-around; 
+  justify-content: space-between; 
   margin-top: 16px;  
 `;
 

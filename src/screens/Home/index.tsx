@@ -26,7 +26,7 @@ import { KEY_K2_LF, KEY_K2_LF_DATA } from '../../constants';
 import { containsKey, loadData } from '../../storage';
 import { MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
-import CardAppointmentItem from '../../components/AppointmentList';
+import CardAppointmentItem from '../../components/CardAppointmentItem';
 
 export function Home({ navigation }: NativeStackHeaderProps) {
   const [user, setUser] = useState<IUser>();
@@ -123,7 +123,7 @@ export function Home({ navigation }: NativeStackHeaderProps) {
           appointmentData.map((item, idx) => {
             return (
               <CardAppointmentItem
-                isVisibleButtons={false}
+                isEditable={false}
                 onCancelAppointment={onHandleCancelAppointment}
                 onFinishAppointment={onHandleFinishAppointment}
                 key={idx}

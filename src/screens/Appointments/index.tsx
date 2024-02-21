@@ -3,7 +3,7 @@ import { Container, AppointmentFlatList } from './styles';
 import { IFormData } from '../../models';
 import { KEY_K2_LF_DATA } from '../../constants';
 import { containsKey, loadData, saveData } from '../../storage';
-import CardAppointmentItem from '../../components/AppointmentList';
+import CardAppointmentItem from '../../components/CardAppointmentItem';
 import { Alert } from 'react-native';
 
 const Appointments = () => {

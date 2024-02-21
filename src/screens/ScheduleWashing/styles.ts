@@ -6,9 +6,10 @@ interface InputType {
   width?: number;
   isMarginLeft?: boolean;
 }
-const Container = styled.View`
+const Container = styled.ScrollView.attrs({
+  contentContainerStyle: { alignItems: 'center' }
+})`
  flex: 1;
- align-items: center;
  padding: 16px;
 `
 const Title = styled.Text<TitleType>`

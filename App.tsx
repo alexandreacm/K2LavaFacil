@@ -22,7 +22,7 @@ import { initializeApp, getApps } from 'firebase/app';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
-const isAndroid = Platform.OS == 'android' ? StatusBar.currentHeight : 0;
+// const isAndroid = Platform.OS == 'android' ? StatusBar.currentHeight : 0;
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA_JLSVtFxJG51n4yD2Sy8bvpck_ZVsvwE',
@@ -65,6 +65,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: isAndroid,
   },
 });

@@ -19,7 +19,6 @@ const HeaderImage = styled(View)`
 `
 
 const ContainerForm = styled.View`
-    flex: 1;
     background-color: ${({ theme }) => theme.COLORS.ui.PRIMARY_800};
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
