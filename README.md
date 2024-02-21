@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="" height="80" title="" src=".github/logo.png" />
+  <img alt="" height="80" title="" src=".github/ic_logo.png" />
 </h1>
 
 <p align="center">
@@ -7,7 +7,6 @@
 </p>
 
 ![cover](.github/cover.png?style=flat)
-
 
 ## 💻 Project
 
