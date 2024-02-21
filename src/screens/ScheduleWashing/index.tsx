@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import {
   Container,
   Input,
@@ -62,6 +63,8 @@ export function ScheduleWashing() {
     data.washingStatus = 'awaiting';
 
     setAppointmentsData([...appointmentData, data]);
+
+    Alert.alert('Novo Agendamento', 'Lavagem agendada com sucesso!!');
   };
 
   useEffect(() => {

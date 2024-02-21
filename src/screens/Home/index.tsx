@@ -61,6 +61,18 @@ export function Home({ navigation }: NativeStackHeaderProps) {
   //   loadVehicleAppointments();
   // }, []);
 
+  function onHandleCancelAppointment(vehiclePlate: string) {
+    const filteredAppointments = appointmentData.filter(
+      item => item.vehiclePlate !== vehiclePlate,
+    );
+
+    setAppointmentsData([...filteredAppointments]);
+  }
+
+  function onHandleFinishAppointment(vehiclePlate: string) {
+    console.log(vehiclePlate);
+  }
+
   useEffect(() => {
     async function loadLocalData() {
       const userStorage = await loadData(KEY_K2_LF);
@@ -109,7 +121,15 @@ export function Home({ navigation }: NativeStackHeaderProps) {
       <ContainerLastAppointments>
         {appointmentData &&
           appointmentData.map((item, idx) => {
-            return <CardAppointmentItem key={idx} item={item} />;
+            return (
+              <CardAppointmentItem
+                isVisibleButtons={false}
+                onCancelAppointment={onHandleCancelAppointment}
+                onFinishAppointment={onHandleFinishAppointment}
+                key={idx}
+                item={item}
+              />
+            );
           })}
 
         {!appointmentData.length && (

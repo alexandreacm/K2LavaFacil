@@ -13,8 +13,11 @@ import {
 } from './styles';
 import { IFormData } from '../../models';
 
-type FlatListProps = {
+type Props = {
   item: IFormData;
+  onCancelAppointment: (vehiclePlate: string) => void;
+  onFinishAppointment: (vehiclePlate: string) => void;
+  isEditable: boolean;
 };
 
 const status: any = {
@@ -23,7 +26,14 @@ const status: any = {
   finished: 'Finalizado',
 };
 
-const CardAppointmentItem = ({ item }: FlatListProps) => {
+const CardAppointmentItem = ({
+  item,
+  onCancelAppointment,
+  onFinishAppointment,
+  isEditable,
+}: Props) => {
+  const isFinishedAppointment = item.washingStatus == 'finished';
+
   return (
     <CardAppointment style={styles.border}>
       <AppointmentStatus status={item.washingStatus}>
@@ -54,15 +64,22 @@ const CardAppointmentItem = ({ item }: FlatListProps) => {
         </Label>
       </ContainerDataHour>
 
-      <ContainerOperation>
-        <OperationButton isCancel>
-          <LabelOperation isCancel>Cancelar</LabelOperation>
-        </OperationButton>
+      {isEditable && !isFinishedAppointment && (
+        <ContainerOperation>
+          <OperationButton
+            disabled={isFinishedAppointment}
+            isCancel
+            onPress={() => onCancelAppointment(item.vehiclePlate)}>
+            <LabelOperation isCancel>Cancelar</LabelOperation>
+          </OperationButton>
 
-        <OperationButton>
-          <LabelOperation>Finalizar</LabelOperation>
-        </OperationButton>
-      </ContainerOperation>
+          <OperationButton
+            disabled={isFinishedAppointment}
+            onPress={() => onFinishAppointment(item.vehiclePlate)}>
+            <LabelOperation>Finalizar</LabelOperation>
+          </OperationButton>
+        </ContainerOperation>
+      )}
     </CardAppointment>
   );
 };
