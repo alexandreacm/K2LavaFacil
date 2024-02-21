@@ -13,6 +13,8 @@ const Appointments = () => {
       const isKeyTask = await containsKey(KEY_K2_LF_DATA);
       const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
 
+      console.log(vehiclesAppointments);
+
       if (isKeyTask && vehiclesAppointments !== null) {
         setAppointmentsData(vehiclesAppointments);
       }

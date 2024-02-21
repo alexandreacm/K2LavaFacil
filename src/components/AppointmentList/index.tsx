@@ -47,7 +47,10 @@ const CardAppointmentItem = ({ item }: FlatListProps) => {
 
       <ContainerDataHour>
         <Label>
-          Tipo Lavagem: <Text>Simples / Carro</Text>
+          Tipo Lavagem:{' '}
+          <Text>
+            {item.washingType} / {item.vehicleType}
+          </Text>
         </Label>
       </ContainerDataHour>
 

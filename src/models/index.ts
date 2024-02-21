@@ -14,7 +14,7 @@ export interface IContext {
     onSignIn: (email: string, password: string) => void
 }
 
-export type IFormData = {
+export interface IFormData {
     vehiclePlate: string;
     date: string;
     hour: string;

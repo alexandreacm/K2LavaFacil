@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components/native";
 import { TitleType } from "../Home/styles";
+import { MaskedTextInput } from "react-native-mask-text";
 
 interface InputType {
   width?: number;
@@ -106,6 +107,33 @@ ${({ theme }) => css`
 `}
 `
 
+const InputMaskVehiclePlate = styled(MaskedTextInput)`
+    width: 100%;
+    height: 50px;
+    border-bottom-width: 1px;
+    font-size: 16px;
+    margin-bottom: 16px;
+    margin-left: 10px;
+`;
+
+const InputMaskDate = styled(MaskedTextInput)`
+    width: 50%;
+    height: 50px;
+    border-bottom-width: 1px;
+    font-size: 16px;
+    margin-bottom: 16px;
+    margin-left: 10px;
+`;
+
+const InputMaskHour = styled(MaskedTextInput)`
+    width: 50%;
+    height: 50px;
+    border-bottom-width: 1px;
+    font-size: 16px;
+    margin-bottom: 16px;
+    margin-left: 10px;
+`;
+
 export {
   Title,
   Container,
@@ -117,5 +145,8 @@ export {
   ButtonNewSchedule,
   LabelButtonNewSchedule,
   PressableVehicle,
-  LabelError
+  LabelError,
+  InputMaskVehiclePlate,
+  InputMaskDate,
+  InputMaskHour
 }

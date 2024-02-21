@@ -11,6 +11,9 @@ import {
   LabelButtonNewSchedule,
   PressableVehicle,
   LabelError,
+  InputMaskVehiclePlate,
+  InputMaskDate,
+  InputMaskHour,
 } from './styles';
 import { KEY_K2_LF_DATA, vehicleTypes, washTypes } from '../../constants';
 import { Controller, useForm } from 'react-hook-form';
@@ -32,7 +35,6 @@ export function ScheduleWashing() {
   const [typeVehicle, setTypeVehicle] = useState('');
   const { goBack } = useNavigation();
 
-  const regexPlaca = /^[A-Z]{3}[0-9]{4}$/;
   const mercosulPlateRegex = /^[A-Z]{3}[0-9]{1}[a-zA-Z]{1}[0-9]{2}$/;
   const regexPlacaMercosulMoto = /^[A-Z]{3}[0-9]{2}[a-zA-Z]{1}[0-9]{1}$/;
 
@@ -40,16 +42,7 @@ export function ScheduleWashing() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormData>({
-    defaultValues: {
-      vehiclePlate: 'IRI8B77',
-      date: '20/02/2024',
-      hour: '17:00',
-      washingType: 'Simples',
-      vehicleType: 'Carro',
-      washingStatus: 'awaiting',
-    },
-  });
+  } = useForm<IFormData>();
 
   function handleSelectWashType(type: string) {
     setSelectionOn(!isSelectionOn);
@@ -62,6 +55,12 @@ export function ScheduleWashing() {
   }
 
   const onSubmit = (data: IFormData) => {
+    // console.log(data);
+
+    data.vehicleType = typeVehicle;
+    data.washingType = washType;
+    data.washingStatus = 'awaiting';
+
     setAppointmentsData([...appointmentData, data]);
   };
 
@@ -96,21 +95,21 @@ export function ScheduleWashing() {
   return (
     <Container>
       <Controller
+        name="vehiclePlate"
         control={control}
         rules={{
           required: true,
           pattern: mercosulPlateRegex,
         }}
         render={({ field: { onChange, value } }) => (
-          <Input
-            width={100}
+          <InputMaskVehiclePlate
+            mask="AAA9A99"
             testID="vehiclePlate"
             placeholder="Informe sua placa"
             onChangeText={onChange}
             value={value}
           />
         )}
-        name="vehiclePlate"
       />
 
       {errors.vehiclePlate && (
@@ -128,9 +127,9 @@ export function ScheduleWashing() {
             required: true,
           }}
           render={({ field: { onChange, value } }) => (
-            <Input
-              width={50}
+            <InputMaskDate
               testID="date"
+              mask="99/99/9999"
               placeholder="Data"
               onChangeText={onChange}
               value={value}
@@ -144,12 +143,11 @@ export function ScheduleWashing() {
             required: true,
           }}
           render={({ field: { onChange, value } }) => (
-            <Input
-              isMarginLeft
-              width={50}
+            <InputMaskHour
               testID="hour"
+              mask="99:99"
               placeholder="Hora"
-              onChangeText={onChange}
+              onChangeText={rawText => onChange(rawText)}
               value={value}
             />
           )}

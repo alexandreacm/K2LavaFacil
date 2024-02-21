@@ -1,4 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+} from 'react';
 
 import {
   Container,
@@ -28,18 +33,33 @@ export function Home({ navigation }: NativeStackHeaderProps) {
 
   const [appointmentData, setAppointmentsData] = useState<IFormData[]>([]);
 
-  useEffect(() => {
-    async function loadVehicleAppointments() {
-      const isKeyTask = await containsKey(KEY_K2_LF_DATA);
-      const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
+  useLayoutEffect(
+    useCallback(() => {
+      loadVehicleAppointments();
+    }, []),
+  );
 
-      if (isKeyTask && vehiclesAppointments !== null) {
-        setAppointmentsData(vehiclesAppointments);
-      }
+  async function loadVehicleAppointments() {
+    const isKeyTask = await containsKey(KEY_K2_LF_DATA);
+    const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
+
+    if (isKeyTask && vehiclesAppointments !== null) {
+      setAppointmentsData(vehiclesAppointments);
     }
+  }
 
-    loadVehicleAppointments();
-  }, []);
+  // useEffect(() => {
+  //   async function loadVehicleAppointments() {
+  //     const isKeyTask = await containsKey(KEY_K2_LF_DATA);
+  //     const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
+
+  //     if (isKeyTask && vehiclesAppointments !== null) {
+  //       setAppointmentsData(vehiclesAppointments);
+  //     }
+  //   }
+
+  //   loadVehicleAppointments();
+  // }, []);
 
   useEffect(() => {
     async function loadLocalData() {
