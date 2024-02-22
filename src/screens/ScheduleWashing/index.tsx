@@ -25,7 +25,7 @@ import {
   containsKey,
   deleteAllStorage,
 } from '../../storage';
-import { format } from 'date-fns';
+import { format, isEqual } from 'date-fns';
 
 export function ScheduleWashing() {
   const [appointmentsData, setAppointmentsData] = useState<IFormData[]>([]);
@@ -68,9 +68,22 @@ export function ScheduleWashing() {
     const aux: string[] | undefined = data.date?.split('/');
     const formattedDate = `${aux[2]}-${aux[1]}-${aux[0]} ${data.hour}`;
 
-    const currentlyDate = format(new Date(formattedDate), 'yyyy-MM-dd HH:mm');
+    const date1 = new Date(formattedDate);
 
-    return false;
+    let existAppointment = Boolean(
+      appointmentsData.find(item => {
+        const formattedDateItem = new Date(
+          `${item.date?.split('/')[2]}-${item.date?.split('/')[1]}-${item.date?.split('/')[0]} ${item.hour}`,
+        );
+
+        return isEqual(date1, formattedDateItem);
+      }),
+    );
+
+    // console.log(isEqual(date1, date2));
+    // console.log(date1.getTime() === date2.getTime());
+
+    return existAppointment;
   }
 
   const onSubmit = (data: IFormData) => {
@@ -82,7 +95,7 @@ export function ScheduleWashing() {
     if (validateVehicleWithSamePlate(data)) {
       Alert.alert(
         'Novo Agendamento',
-        'Agendamento não realizado porque já existe uma placa cadastrada para este veiculo!!',
+        'Agendamento não realizado porque já existe um veiculo cadastrado com esta placa!!',
       );
       return;
     }
@@ -101,7 +114,7 @@ export function ScheduleWashing() {
   };
 
   useEffect(() => {
-    deleteAllStorage();
+    // deleteAllStorage();
     async function loadVehicleAppointments() {
       const isKeyTask = await containsKey(KEY_K2_LF_DATA);
       const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
