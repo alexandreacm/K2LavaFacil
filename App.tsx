@@ -3,19 +3,12 @@ import { StyleSheet } from 'react-native';
 import Navigation from './src/navigation';
 import { ThemeProvider } from './src/components/ThemeProvider';
 
-import {
-  useFonts,
-  Roboto_100Thin,
-  Roboto_300Light,
-  Roboto_400Regular,
-  Roboto_500Medium,
-  Roboto_700Bold,
-} from '@expo-google-fonts/roboto';
 import { AuthenticationProvider } from './src/contexts/authentication.context';
 import { initializeApp, getApps } from 'firebase/app';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeArea } from './src/utility/safe-area';
+import useGoogleFonts from './src/hooks/useGoogleFonts';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA_JLSVtFxJG51n4yD2Sy8bvpck_ZVsvwE',
@@ -34,13 +27,7 @@ if (!getApps().length) {
 }
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    Roboto_100Thin,
-    Roboto_300Light,
-    Roboto_400Regular,
-    Roboto_500Medium,
-    Roboto_700Bold,
-  });
+  const fontsLoaded = useGoogleFonts();
 
   if (!fontsLoaded) return null;
 
