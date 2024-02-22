@@ -66,9 +66,9 @@ export function ScheduleWashing() {
 
   function validationOfVehicleTime(data: IFormData) {
     const aux: string[] | undefined = data.date?.split('/');
-    const formattedDate = `${aux[2]}-${aux[1]}-${aux[0]} ${data.hour}`;
-
-    const date1 = new Date(formattedDate);
+    const currentFormattedDate = new Date(
+      `${aux[2]}-${aux[1]}-${aux[0]} ${data.hour}`,
+    );
 
     let existAppointment = Boolean(
       appointmentsData.find(item => {
@@ -76,7 +76,7 @@ export function ScheduleWashing() {
           `${item.date?.split('/')[2]}-${item.date?.split('/')[1]}-${item.date?.split('/')[0]} ${item.hour}`,
         );
 
-        return isEqual(date1, formattedDateItem);
+        return isEqual(currentFormattedDate, formattedDateItem);
       }),
     );
 
