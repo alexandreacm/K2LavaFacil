@@ -25,16 +25,15 @@ import {
   containsKey,
   deleteAllStorage,
 } from '../../storage';
-import { useNavigation } from '@react-navigation/native';
+import { format } from 'date-fns';
 
 export function ScheduleWashing() {
-  const [isSelectionOn, setSelectionOn] = useState(false);
-  const [appointmentData, setAppointmentsData] = useState<IFormData[]>([]);
+  const [appointmentsData, setAppointmentsData] = useState<IFormData[]>([]);
 
+  const [isWashTypeSelected, setIsWashTypeSelected] = useState(false);
   const [isTypeCarSelected, setIsTypeCarSelected] = useState(false);
   const [washType, setWashType] = useState('');
   const [typeVehicle, setTypeVehicle] = useState('');
-  const { goBack } = useNavigation();
 
   const mercosulPlateRegex = /^[A-Z]{3}[0-9]{1}[a-zA-Z]{1}[0-9]{2}$/;
   const regexPlacaMercosulMoto = /^[A-Z]{3}[0-9]{2}[a-zA-Z]{1}[0-9]{1}$/;
@@ -45,8 +44,8 @@ export function ScheduleWashing() {
     formState: { errors },
   } = useForm<IFormData>();
 
-  function handleSelectWashType(type: string) {
-    setSelectionOn(!isSelectionOn);
+  function onSelectWashType(type: string) {
+    setIsWashTypeSelected(!isWashTypeSelected);
     setWashType(type);
   }
 
@@ -55,22 +54,54 @@ export function ScheduleWashing() {
     setTypeVehicle(typeVehicle);
   }
 
+  function validateVehicleWithSamePlate(data: IFormData): boolean {
+    return Boolean(
+      appointmentsData.find(
+        vehiclePlate =>
+          vehiclePlate.vehiclePlate.toUpperCase() ==
+          data.vehiclePlate.toUpperCase(),
+      ),
+    );
+  }
+
+  function validationOfVehicleTime(data: IFormData) {
+    const aux: string[] | undefined = data.date?.split('/');
+    const formattedDate = `${aux[2]}-${aux[1]}-${aux[0]} ${data.hour}`;
+
+    const currentlyDate = format(new Date(formattedDate), 'yyyy-MM-dd HH:mm');
+
+    return false;
+  }
+
   const onSubmit = (data: IFormData) => {
     // console.log(data);
-
     data.vehicleType = typeVehicle;
     data.washingType = washType;
     data.washingStatus = 'awaiting';
 
-    setAppointmentsData([...appointmentData, data]);
+    if (validateVehicleWithSamePlate(data)) {
+      Alert.alert(
+        'Novo Agendamento',
+        'Agendamento não realizado porque já existe uma placa cadastrada para este veiculo!!',
+      );
+      return;
+    }
+
+    if (validationOfVehicleTime(data)) {
+      Alert.alert(
+        'Novo Agendamento',
+        'Não são permitidas agendas para mesmo horário!!',
+      );
+      return;
+    }
+
+    setAppointmentsData([...appointmentsData, data]);
 
     Alert.alert('Novo Agendamento', 'Lavagem agendada com sucesso!!');
   };
 
   useEffect(() => {
-    // deleteAllStorage();
-    console.log('useEffect LOAD..');
-
+    deleteAllStorage();
     async function loadVehicleAppointments() {
       const isKeyTask = await containsKey(KEY_K2_LF_DATA);
       const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
@@ -84,16 +115,14 @@ export function ScheduleWashing() {
   }, []);
 
   useEffect(() => {
-    console.log('useEffect SAVE..');
-
     async function saveVehicleAppointments() {
-      if (appointmentData.length > 0) {
-        await saveData(KEY_K2_LF_DATA, appointmentData);
+      if (appointmentsData.length > 0) {
+        await saveData(KEY_K2_LF_DATA, appointmentsData);
       }
     }
 
     saveVehicleAppointments();
-  }, [appointmentData]);
+  }, [appointmentsData]);
 
   return (
     <Container>
@@ -159,19 +188,19 @@ export function ScheduleWashing() {
       </ViewForm>
 
       <PressableContainer>
-        {isSelectionOn ? (
+        {isWashTypeSelected ? (
           washTypes.map((item, idx) => {
             return (
               <PressableButton
                 key={idx}
-                onPressIn={() => handleSelectWashType(item)}>
+                onPressIn={() => onSelectWashType(item)}>
                 <Title>{item}</Title>
               </PressableButton>
             );
           })
         ) : (
           <Input
-            onPressIn={() => setSelectionOn(true)}
+            onPressIn={() => setIsWashTypeSelected(true)}
             placeholder="Tipo de lavagem"
             placeholderTextColor={'rgba(0,0,0,0.4)'}
             onChangeText={setWashType}

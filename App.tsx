@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Platform,
-  View,
-  StatusBar,
-  StyleSheet,
-  SafeAreaView,
-} from 'react-native';
+import { StyleSheet } from 'react-native';
 import Navigation from './src/navigation';
 import { ThemeProvider } from './src/components/ThemeProvider';
 
@@ -21,8 +15,7 @@ import { AuthenticationProvider } from './src/contexts/authentication.context';
 import { initializeApp, getApps } from 'firebase/app';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
-
-// const isAndroid = Platform.OS == 'android' ? StatusBar.currentHeight : 0;
+import { SafeArea } from './src/utility/safe-area';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA_JLSVtFxJG51n4yD2Sy8bvpck_ZVsvwE',
@@ -52,13 +45,13 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeArea style={styles.container}>
       <ThemeProvider>
         <AuthenticationProvider>
           <Navigation />
         </AuthenticationProvider>
       </ThemeProvider>
-    </SafeAreaView>
+    </SafeArea>
   );
 }
 

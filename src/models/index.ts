@@ -16,9 +16,9 @@ export interface IContext {
 
 export interface IFormData {
     vehiclePlate: string;
-    date: string;
-    hour: string;
-    washingType: string;
-    vehicleType: string;
-    washingStatus: string;
+    date?: string;
+    hour?: string;
+    washingType?: string;
+    vehicleType?: string;
+    washingStatus?: string;
 }
