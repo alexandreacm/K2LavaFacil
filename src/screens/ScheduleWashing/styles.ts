@@ -6,6 +6,7 @@ interface InputType {
   width?: number;
   isMarginLeft?: boolean;
 }
+
 const Container = styled.ScrollView.attrs({
   contentContainerStyle: { alignItems: 'center' }
 })`
@@ -45,18 +46,6 @@ const ViewForm = styled.View`
 `;
 
 const PressableButton = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.8
-})`
-  width: 100px;
-  height: 40px;
-  justify-content: center;
-  align-items: center;
-  margin-left: 10px;
-  border-radius: 50px;
-  background-color: ${({ theme }) => theme.COLORS.ui.HOME_PRIMARY_800};
-`;
-
-const PressableVehicle = styled.TouchableOpacity.attrs({
   activeOpacity: 0.8
 })`
   width: 100px;
@@ -145,7 +134,6 @@ export {
   PressableContainer,
   ButtonNewSchedule,
   LabelButtonNewSchedule,
-  PressableVehicle,
   LabelError,
   InputMaskVehiclePlate,
   InputMaskDate,

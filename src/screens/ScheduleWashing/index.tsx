@@ -26,6 +26,7 @@ import {
   deleteAllStorage,
 } from '../../storage';
 import { format, isEqual } from 'date-fns';
+import CustomPressable from '../../components/CustomPressable';
 
 export function ScheduleWashing() {
   const [appointmentsData, setAppointmentsData] = useState<IFormData[]>([]);
@@ -200,49 +201,23 @@ export function ScheduleWashing() {
         />
       </ViewForm>
 
-      <PressableContainer>
-        {isWashTypeSelected ? (
-          washTypes.map((item, idx) => {
-            return (
-              <PressableButton
-                key={idx}
-                onPressIn={() => onSelectWashType(item)}>
-                <Title>{item}</Title>
-              </PressableButton>
-            );
-          })
-        ) : (
-          <Input
-            onPressIn={() => setIsWashTypeSelected(true)}
-            placeholder="Tipo de lavagem"
-            placeholderTextColor={'rgba(0,0,0,0.4)'}
-            onChangeText={setWashType}
-            value={washType}
-          />
-        )}
-      </PressableContainer>
+      <CustomPressable
+        data={washTypes}
+        placeholder="Tipo de lavagem"
+        isTypeSelected={isWashTypeSelected}
+        onSelectType={onSelectWashType}
+        setTypeSelected={setIsWashTypeSelected}
+        washType={washType}
+      />
 
-      <PressableContainer>
-        {isTypeCarSelected ? (
-          vehicleTypes.map((typeVehicle, idx) => {
-            return (
-              <PressableVehicle
-                key={idx}
-                onPressIn={() => onSelectTypeVehicle(typeVehicle)}>
-                <Title>{typeVehicle}</Title>
-              </PressableVehicle>
-            );
-          })
-        ) : (
-          <Input
-            onPressIn={() => setIsTypeCarSelected(!isTypeCarSelected)}
-            placeholder="Tipo de veiculo"
-            placeholderTextColor={'rgba(0,0,0,0.4)'}
-            onChangeText={setTypeVehicle}
-            value={typeVehicle}
-          />
-        )}
-      </PressableContainer>
+      <CustomPressable
+        data={vehicleTypes}
+        placeholder="Tipo de veiculo"
+        isTypeSelected={isTypeCarSelected}
+        onSelectType={onSelectTypeVehicle}
+        setTypeSelected={setIsTypeCarSelected}
+        washType={typeVehicle}
+      />
 
       <ButtonNewSchedule onPress={handleSubmit(onSubmit)}>
         <LabelButtonNewSchedule>Novo Agendamento</LabelButtonNewSchedule>
