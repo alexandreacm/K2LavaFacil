@@ -16,6 +16,7 @@ import {
   LabelError,
 } from './styles';
 import { useAuthentication } from '../../contexts/authentication.context';
+import { Loading } from '../../components/Loading';
 
 export function SignIn() {
   const [email, setEmail] = useState('admin@gmail.com');
@@ -53,6 +54,7 @@ export function SignIn() {
 
         <SignInButton testID="btnSignIn" onPress={handleSignIn}>
           <TextSignIn testID="lblSignIn">Entrar</TextSignIn>
+          {isLoading && <Loading />}
         </SignInButton>
 
         <ButtonRegister testID="btnRegister">

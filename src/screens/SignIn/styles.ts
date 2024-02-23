@@ -49,6 +49,7 @@ const SignInButton = styled.TouchableOpacity`
     border-radius: 10px;
     background-color: ${({ theme }) => theme.COLORS.ui.PRIMARY_900};
     margin-top: 14px;
+    flex-direction: row;
     justify-content: center;
     align-items: center; 
 `;
@@ -57,12 +58,14 @@ const TextSignIn = styled.Text`
     font-size: 18px;
     font-weight: bold;
     color: ${({ theme }) => theme.COLORS.ui.PRIMARY_800};
+    margin-right: 10px;
 `
 
 const LabelError = styled.Text`
     font-size: 12px;
     color: ${({ theme }) => theme.COLORS.text.ERROR};
 `;
+
 
 export {
     Label,

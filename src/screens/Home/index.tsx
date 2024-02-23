@@ -48,19 +48,6 @@ export function Home({ navigation }: NativeStackHeaderProps) {
     }
   }
 
-  // useEffect(() => {
-  //   async function loadVehicleAppointments() {
-  //     const isKeyTask = await containsKey(KEY_K2_LF_DATA);
-  //     const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
-
-  //     if (isKeyTask && vehiclesAppointments !== null) {
-  //       setAppointmentsData(vehiclesAppointments);
-  //     }
-  //   }
-
-  //   loadVehicleAppointments();
-  // }, []);
-
   function onHandleCancelAppointment(vehiclePlate: string) {
     const filteredAppointments = appointmentData.filter(
       item => item.vehiclePlate !== vehiclePlate,
@@ -82,6 +69,19 @@ export function Home({ navigation }: NativeStackHeaderProps) {
       }
     }
     loadLocalData();
+  }, []);
+
+  useEffect(() => {
+    async function loadVehicleAppointments() {
+      const isKeyTask = await containsKey(KEY_K2_LF_DATA);
+      const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
+
+      if (isKeyTask && vehiclesAppointments !== null) {
+        setAppointmentsData(vehiclesAppointments);
+      }
+    }
+
+    loadVehicleAppointments();
   }, []);
 
   return (

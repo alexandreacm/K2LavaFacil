@@ -2,15 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import {
   Container,
-  Input,
-  Label,
-  Title,
   ViewForm,
-  PressableButton,
-  PressableContainer,
   ButtonNewSchedule,
   LabelButtonNewSchedule,
-  PressableVehicle,
   LabelError,
   InputMaskVehiclePlate,
   InputMaskDate,

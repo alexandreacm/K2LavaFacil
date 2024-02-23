@@ -84,8 +84,6 @@ const CardAppointmentItem = ({
   );
 };
 
-export default CardAppointmentItem;
-
 const styles = StyleSheet.create({
   border: {
     shadowColor: '#000',
@@ -95,3 +93,5 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
 });
+
+export default CardAppointmentItem;

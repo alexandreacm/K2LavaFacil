@@ -48,6 +48,9 @@ export function AuthenticationProvider({ children }: Props) {
           errorMessage,
         });
         // console.log(`${errorCode}-${errorMessage}`);
+      })
+      .finally(() => {
+        setIsLoading(true);
       });
   }
 

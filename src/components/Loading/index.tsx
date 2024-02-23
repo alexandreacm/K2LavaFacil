@@ -1,13 +1,13 @@
 import React from 'react';
-import {ActivityIndicator} from 'react-native';
-import {useTheme} from 'styled-components/native';
-import {StyledContainer} from './styles';
+import { ActivityIndicator } from 'react-native';
+import { useTheme } from 'styled-components/native';
+import { StyledContainer } from './styles';
 
 export function Loading() {
-  const {colors} = useTheme();
+  const { COLORS } = useTheme();
   return (
     <StyledContainer>
-      <ActivityIndicator size={'large'} color={colors.ui.PRIMARY} />
+      <ActivityIndicator size={'small'} color={COLORS.ui.SECONDARY_900} />
     </StyledContainer>
   );
 }
