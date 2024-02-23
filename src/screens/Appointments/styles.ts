@@ -29,7 +29,7 @@ color: ${({ theme }) => theme.COLORS.ui.HOME_PRIMARY_900};
 
 const AppointmentFlatList = styled(FlatList as new (props: FlatListProps<IFormData>) => FlatList<IFormData>)
   .attrs({
-    contentContainerStyle: { marginTop: 15 }
+    contentContainerStyle: { marginTop: 15, paddingBottom: 20 }
   })``;
 
 

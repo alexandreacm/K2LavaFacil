@@ -137,6 +137,7 @@ const AppointmentFlatList = styled(FlatList as new (props: FlatListProps<IFormDa
 const ContainerLastAppointments = styled.View`
   flex: 1;
   margin-top: 16px;
+  padding-bottom: 20px;
 `;
 
 export {

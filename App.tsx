@@ -32,7 +32,7 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeArea style={styles.container}>
+    <SafeArea>
       <ThemeProvider>
         <AuthenticationProvider>
           <Navigation />
@@ -41,9 +41,3 @@ export default function App() {
     </SafeArea>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

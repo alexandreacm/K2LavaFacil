@@ -5,6 +5,7 @@ import { KEY_K2_LF_DATA } from '../../constants';
 import { containsKey, loadData, saveData } from '../../storage';
 import CardAppointmentItem from '../../components/CardAppointmentItem';
 import { Alert } from 'react-native';
+import { formatCustomDate } from '../../utility/utils';
 
 const Appointments = () => {
   const [appointmentData, setAppointmentsData] = useState<IFormData[]>([]);
@@ -47,7 +48,18 @@ const Appointments = () => {
       const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
 
       if (isKeyTask && vehiclesAppointments !== null) {
-        setAppointmentsData(vehiclesAppointments);
+        let storageData: IFormData[] = vehiclesAppointments;
+
+        let orderedData = storageData.sort(
+          (itemA: IFormData, itemB: IFormData) => {
+            return (
+              new Date(`${formatCustomDate(itemA)}`).getTime() -
+              new Date(`${formatCustomDate(itemB)}`).getTime()
+            );
+          },
+        );
+
+        setAppointmentsData(orderedData);
       }
     }
 
