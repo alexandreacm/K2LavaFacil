@@ -28,25 +28,41 @@ import { MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import CardAppointmentItem from '../../components/CardAppointmentItem';
 import { formatCustomDate } from '../../utility/utils';
+import { useIsFocused } from '@react-navigation/native';
 
 export function Home({ navigation }: NativeStackHeaderProps) {
   const [user, setUser] = useState<IUser>();
+  const isFocused = useIsFocused();
 
   const [appointmentData, setAppointmentsData] = useState<IFormData[]>([]);
 
-  function onHandleCancelAppointment(vehiclePlate: string) {
-    const filteredAppointments = appointmentData.filter(
-      item => item.vehiclePlate !== vehiclePlate,
-    );
+  const onHandleCancelAppointment = useCallback(
+    (vehiclePlate: string) => {
+      const filteredAppointments = appointmentData.filter(
+        item => item.vehiclePlate !== vehiclePlate,
+      );
 
-    setAppointmentsData([...filteredAppointments]);
-  }
+      setAppointmentsData([...filteredAppointments]);
+    },
+    [appointmentData],
+  );
 
-  function onHandleFinishAppointment(vehiclePlate: string) {
-    console.log(vehiclePlate);
-  }
+  const onHandleFinishAppointment = useCallback(
+    (vehiclePlate: string) => {
+      const editingSchedule: any = appointmentData.find(
+        item => item.vehiclePlate == vehiclePlate,
+      );
+
+      editingSchedule.washingStatus = 'finished';
+
+      setAppointmentsData([...appointmentData]);
+    },
+    [appointmentData],
+  );
 
   useEffect(() => {
+    // console.log(`Home useEffectI rendered ...`);
+
     async function loadLocalData() {
       const userStorage = await loadData(KEY_K2_LF);
       if (userStorage !== null) {
@@ -57,31 +73,31 @@ export function Home({ navigation }: NativeStackHeaderProps) {
     loadLocalData();
   }, []);
 
-  async function loadVehicleAppointments() {
-    const isKeyTask = await containsKey(KEY_K2_LF_DATA);
-    const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
+  useEffect(() => {
+    // console.log(`Home useEffectII rendered ...`);
 
-    if (isKeyTask && vehiclesAppointments !== null) {
-      let storageData: IFormData[] = vehiclesAppointments;
+    async function loadVehicleAppointments() {
+      const isKeyTask = await containsKey(KEY_K2_LF_DATA);
+      const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
 
-      let orderedData = storageData.sort(
-        (itemA: IFormData, itemB: IFormData) => {
-          return (
-            new Date(`${formatCustomDate(itemA)}`).getTime() -
-            new Date(`${formatCustomDate(itemB)}`).getTime()
-          );
-        },
-      );
+      if (isKeyTask && vehiclesAppointments !== null) {
+        let storageData: IFormData[] = vehiclesAppointments;
 
-      setAppointmentsData(orderedData);
+        let orderedData = storageData.sort(
+          (itemA: IFormData, itemB: IFormData) => {
+            return (
+              new Date(`${formatCustomDate(itemA)}`).getTime() -
+              new Date(`${formatCustomDate(itemB)}`).getTime()
+            );
+          },
+        );
+
+        setAppointmentsData(orderedData);
+      }
     }
-  }
 
-  useLayoutEffect(
-    useCallback(() => {
-      loadVehicleAppointments();
-    }, []),
-  );
+    loadVehicleAppointments();
+  }, [isFocused]);
 
   return (
     <Container>
@@ -122,10 +138,10 @@ export function Home({ navigation }: NativeStackHeaderProps) {
           appointmentData.map((item, idx) => {
             return (
               <CardAppointmentItem
+                key={idx}
                 isEditable={false}
                 onCancelAppointment={onHandleCancelAppointment}
                 onFinishAppointment={onHandleFinishAppointment}
-                key={idx}
                 item={item}
               />
             );
