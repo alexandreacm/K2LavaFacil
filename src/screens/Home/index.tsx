@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import {
   Container,
   Title,
@@ -18,43 +18,18 @@ import {
 } from './styles';
 import { IFormData, IUser } from '../../models';
 import { KEY_K2_LF, KEY_K2_LF_DATA } from '../../constants';
-import { containsKey, loadData } from '../../storage';
+import { containsKey, loadData, saveData } from '../../storage';
 import { MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import CardAppointmentItem from '../../components/CardAppointmentItem';
 import { formatCustomDate } from '../../utility/utils';
+import { Alert } from 'react-native';
 
 export function Home({ navigation }: NativeStackHeaderProps) {
   const [user, setUser] = useState<IUser>();
   const [appointmentData, setAppointmentsData] = useState<IFormData[]>([]);
 
-  const onHandleCancelAppointment = useCallback(
-    (vehiclePlate: string) => {
-      const filteredAppointments = appointmentData.filter(
-        item => item.vehiclePlate !== vehiclePlate,
-      );
-
-      setAppointmentsData([...filteredAppointments]);
-    },
-    [appointmentData],
-  );
-
-  const onHandleFinishAppointment = useCallback(
-    (vehiclePlate: string) => {
-      const editingSchedule: any = appointmentData.find(
-        item => item.vehiclePlate == vehiclePlate,
-      );
-
-      editingSchedule.washingStatus = 'finished';
-
-      setAppointmentsData([...appointmentData]);
-    },
-    [appointmentData],
-  );
-
   useEffect(() => {
-    // console.log(`Home useEffect rendered ...`);
-
     async function loadLocalData() {
       const userStorage = await loadData(KEY_K2_LF);
       if (userStorage !== null) {
@@ -91,6 +66,48 @@ export function Home({ navigation }: NativeStackHeaderProps) {
       loadVehicleAppointments();
     }, []),
   );
+
+  useEffect(() => {
+    async function saveVehicleAppointments() {
+      if (appointmentData.length > 0) {
+        await saveData(KEY_K2_LF_DATA, appointmentData);
+      }
+    }
+
+    saveVehicleAppointments();
+  }, [appointmentData]);
+
+  const onHandleFinishAppointment = (vehiclePlate: string) => {
+    const editingSchedule: any = appointmentData.find(
+      item => item.vehiclePlate == vehiclePlate,
+    );
+
+    editingSchedule.washingStatus = 'finished';
+
+    setAppointmentsData([...appointmentData]);
+  };
+
+  const onCancelAppointmentAlert = (vehiclePlate: string) =>
+    Alert.alert(
+      'Agendamento de lavagem',
+      'Deseja realmente cancelar este agendamento?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => onHandleCancelAppointment(vehiclePlate) },
+      ],
+    );
+
+  function onHandleCancelAppointment(vehiclePlate: string) {
+    const filteredAppointments = appointmentData.filter(
+      item => item.vehiclePlate !== vehiclePlate,
+    );
+
+    setAppointmentsData(filteredAppointments);
+  }
 
   return (
     <Container>
@@ -132,8 +149,8 @@ export function Home({ navigation }: NativeStackHeaderProps) {
             return (
               <CardAppointmentItem
                 key={idx}
-                isEditable={false}
-                onCancelAppointment={onHandleCancelAppointment}
+                isEditable={true}
+                onCancelAppointment={onCancelAppointmentAlert}
                 onFinishAppointment={onHandleFinishAppointment}
                 item={item}
               />
