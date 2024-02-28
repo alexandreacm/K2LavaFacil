@@ -1,10 +1,5 @@
-import React, {
-  useState,
-  useEffect,
-  useLayoutEffect,
-  useCallback,
-} from 'react';
-
+import React, { useState, useEffect, useCallback } from 'react';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import {
   Container,
   Title,
@@ -28,12 +23,9 @@ import { MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import CardAppointmentItem from '../../components/CardAppointmentItem';
 import { formatCustomDate } from '../../utility/utils';
-import { useIsFocused } from '@react-navigation/native';
 
 export function Home({ navigation }: NativeStackHeaderProps) {
   const [user, setUser] = useState<IUser>();
-  const isFocused = useIsFocused();
-
   const [appointmentData, setAppointmentsData] = useState<IFormData[]>([]);
 
   const onHandleCancelAppointment = useCallback(
@@ -61,43 +53,44 @@ export function Home({ navigation }: NativeStackHeaderProps) {
   );
 
   useEffect(() => {
-    // console.log(`Home useEffectI rendered ...`);
+    // console.log(`Home useEffect rendered ...`);
 
     async function loadLocalData() {
       const userStorage = await loadData(KEY_K2_LF);
       if (userStorage !== null) {
-        // console.log(userStorage);
         setUser(userStorage);
       }
     }
     loadLocalData();
   }, []);
 
-  useEffect(() => {
-    // console.log(`Home useEffectII rendered ...`);
+  useFocusEffect(
+    useCallback(() => {
+      // console.log(`Home useFocusEffect rendered ...`);
 
-    async function loadVehicleAppointments() {
-      const isKeyTask = await containsKey(KEY_K2_LF_DATA);
-      const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
+      async function loadVehicleAppointments() {
+        const isKeyTask = await containsKey(KEY_K2_LF_DATA);
+        const vehiclesAppointments = await loadData(KEY_K2_LF_DATA);
 
-      if (isKeyTask && vehiclesAppointments !== null) {
-        let storageData: IFormData[] = vehiclesAppointments;
+        if (isKeyTask && vehiclesAppointments !== null) {
+          let storageData: IFormData[] = vehiclesAppointments;
 
-        let orderedData = storageData.sort(
-          (itemA: IFormData, itemB: IFormData) => {
-            return (
-              new Date(`${formatCustomDate(itemA)}`).getTime() -
-              new Date(`${formatCustomDate(itemB)}`).getTime()
-            );
-          },
-        );
+          let orderedData = storageData.sort(
+            (itemA: IFormData, itemB: IFormData) => {
+              return (
+                new Date(`${formatCustomDate(itemA)}`).getTime() -
+                new Date(`${formatCustomDate(itemB)}`).getTime()
+              );
+            },
+          );
 
-        setAppointmentsData(orderedData);
+          setAppointmentsData(orderedData);
+        }
       }
-    }
 
-    loadVehicleAppointments();
-  }, [isFocused]);
+      loadVehicleAppointments();
+    }, []),
+  );
 
   return (
     <Container>
