@@ -18,7 +18,7 @@ import {
 } from './styles';
 import { IFormData, IUser } from '../../models';
 import { KEY_K2_LF, KEY_K2_LF_DATA } from '../../constants';
-import { containsKey, loadData, saveData } from '../../storage';
+import { containsKey, deleteStorage, loadData, saveData } from '../../storage';
 import { MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import CardAppointmentItem from '../../components/CardAppointmentItem';
@@ -30,6 +30,7 @@ export function Home({ navigation }: NativeStackHeaderProps) {
   const [appointmentData, setAppointmentsData] = useState<IFormData[]>([]);
 
   useEffect(() => {
+    // deleteStorage(KEY_K2_LF);
     async function loadLocalData() {
       const userStorage = await loadData(KEY_K2_LF);
       if (userStorage !== null) {

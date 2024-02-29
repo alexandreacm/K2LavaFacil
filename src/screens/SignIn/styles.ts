@@ -26,7 +26,7 @@ const ContainerForm = styled.View`
     padding-right: 5%;
 `;
 
-const ButtonRegister = styled.TouchableOpacity`
+const RegisterButton = styled.TouchableOpacity`
     margin-top: 14px;
     align-self: center;
 `
@@ -73,7 +73,7 @@ export {
     HeaderImage,
     ContainerForm,
     SignInButton,
-    ButtonRegister,
+    RegisterButton,
     TextBtnRegister,
     TextSignIn,
     Input,

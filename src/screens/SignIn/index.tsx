@@ -9,7 +9,7 @@ import {
   ContainerForm,
   SignInButton,
   Label,
-  ButtonRegister,
+  RegisterButton,
   TextBtnRegister,
   TextSignIn,
   Input,
@@ -57,11 +57,11 @@ export function SignIn() {
           {isLoading && <Loading />}
         </SignInButton>
 
-        <ButtonRegister testID="btnRegister">
+        <RegisterButton testID="btnRegister">
           <TextBtnRegister testID="lblRegister">
             Não possui uma conta? Cadastre-se
           </TextBtnRegister>
-        </ButtonRegister>
+        </RegisterButton>
       </ContainerForm>
     </Container>
   );
