@@ -27,7 +27,8 @@ export function ScheduleWashing() {
 
   const [isWashTypeSelected, setIsWashTypeSelected] = useState(false);
   const [isTypeCarSelected, setIsTypeCarSelected] = useState(false);
-  const [washType, setWashType] = useState('');
+
+  const [typeWash, setTypeWash] = useState('');
   const [typeVehicle, setTypeVehicle] = useState('');
 
   const mercosulPlateRegex = /^[A-Z]{3}[0-9]{1}[a-zA-Z]{1}[0-9]{2}$/;
@@ -41,7 +42,7 @@ export function ScheduleWashing() {
 
   function onSelectWashType(type: string) {
     setIsWashTypeSelected(!isWashTypeSelected);
-    setWashType(type);
+    setTypeWash(type);
   }
 
   function onSelectTypeVehicle(typeVehicle: string) {
@@ -84,7 +85,7 @@ export function ScheduleWashing() {
   const onSubmit = (data: IFormData) => {
     // console.log(data);
     data.vehicleType = typeVehicle;
-    data.washingType = washType;
+    data.washingType = typeWash;
     data.washingStatus = 'awaiting';
 
     if (validateVehicleWithSamePlate(data)) {
@@ -201,7 +202,7 @@ export function ScheduleWashing() {
         isTypeSelected={isWashTypeSelected}
         onSelectType={onSelectWashType}
         setTypeSelected={setIsWashTypeSelected}
-        washType={washType}
+        washType={typeWash}
       />
 
       <CustomPressable

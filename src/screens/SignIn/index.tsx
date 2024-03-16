@@ -19,12 +19,19 @@ import { useAuthentication } from '../../contexts/authentication.context';
 import { Loading } from '../../components/Loading';
 
 export function SignIn() {
-  const [email, setEmail] = useState('admin@gmail.com');
-  const [password, setPassword] = useState('102030');
+  const [email, setEmail] = useState(''); //admin@gmail.com
+  const [password, setPassword] = useState(''); //102030
+  const [isSignInError, setIsSignInError] = useState(false);
 
   const { onSignIn, error, isLoading } = useAuthentication();
 
   function handleSignIn() {
+    if (email == '' || password == '') {
+      setIsSignInError(true);
+      return;
+    }
+
+    setIsSignInError(false);
     onSignIn(email, password);
   }
 
@@ -52,7 +59,13 @@ export function SignIn() {
           secureTextEntry
         />
 
-        {error && (
+        {isSignInError && (
+          <LabelError testID="lblError">
+            É necessário preencher os campos email/senha
+          </LabelError>
+        )}
+
+        {error && !isSignInError && (
           <LabelError testID="lblError">{error?.errorMessage}</LabelError>
         )}
 
