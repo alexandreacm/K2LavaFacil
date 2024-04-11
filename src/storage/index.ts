@@ -31,8 +31,12 @@ const containsKey = async (key: string): Promise<boolean> => {
     return containKey;
 }
 
+const deleteStorage = async (key: string) => {
+    await AsyncStorage.removeItem(key);
+}
+
 const deleteAllStorage = async () => {
     await AsyncStorage.clear();
 }
 
-export { saveData, loadData, containsKey, deleteAllStorage }
+export { saveData, loadData, containsKey, deleteAllStorage, deleteStorage }

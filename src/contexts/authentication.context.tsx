@@ -12,7 +12,7 @@ const initialValue: IContext = {
   },
   isLoading: false,
   error: { errorCode: 0, errorMessage: '' },
-  onSignIn() {},
+  onSignIn: () => {},
 };
 
 const AuthenticationContext = createContext(initialValue);
@@ -47,10 +47,8 @@ export function AuthenticationProvider({ children }: Props) {
           errorCode,
           errorMessage,
         });
+        setIsLoading(false);
         // console.log(`${errorCode}-${errorMessage}`);
-      })
-      .finally(() => {
-        setIsLoading(true);
       });
   }
 

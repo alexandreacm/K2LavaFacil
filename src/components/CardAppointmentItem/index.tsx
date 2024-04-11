@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { StyleSheet } from 'react-native';
 import {
   AppointmentStatus,
@@ -94,4 +94,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CardAppointmentItem;
+export default memo(CardAppointmentItem);

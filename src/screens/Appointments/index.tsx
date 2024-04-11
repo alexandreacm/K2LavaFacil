@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Container, AppointmentFlatList } from './styles';
 import { IFormData } from '../../models';
 import { KEY_K2_LF_DATA } from '../../constants';
@@ -32,7 +32,7 @@ const Appointments = () => {
     setAppointmentsData(filteredAppointments);
   }
 
-  function onHandleFinishAppointment(vehiclePlate: string) {
+  const onHandleFinishAppointment = (vehiclePlate: string) => {
     const editingSchedule: any = appointmentData.find(
       item => item.vehiclePlate == vehiclePlate,
     );
@@ -40,7 +40,7 @@ const Appointments = () => {
     editingSchedule.washingStatus = 'finished';
 
     setAppointmentsData([...appointmentData]);
-  }
+  };
 
   useEffect(() => {
     async function loadVehicleAppointments() {
@@ -75,13 +75,6 @@ const Appointments = () => {
 
     saveVehicleAppointments();
   }, [appointmentData]);
-
-  //   useFocusEffect(
-  //     React.useCallback(() => {
-  //       console.log('useEffect LOADING DATA..');
-  //       loadVehicleAppointments();
-  //     }, []),
-  //   );
 
   return (
     <Container>

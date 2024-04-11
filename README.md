@@ -6,7 +6,7 @@
   <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=E51C44&labelColor=0A1033">
 </p>
 
-![cover](.github/cover.png?style=flat)
+![cover](.github/cover_.png?style=flat)
 
 ## 💻 Project
 

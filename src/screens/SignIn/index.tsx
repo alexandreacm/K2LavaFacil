@@ -9,7 +9,7 @@ import {
   ContainerForm,
   SignInButton,
   Label,
-  ButtonRegister,
+  RegisterButton,
   TextBtnRegister,
   TextSignIn,
   Input,
@@ -19,12 +19,19 @@ import { useAuthentication } from '../../contexts/authentication.context';
 import { Loading } from '../../components/Loading';
 
 export function SignIn() {
-  const [email, setEmail] = useState('admin@gmail.com');
-  const [password, setPassword] = useState('102030');
+  const [email, setEmail] = useState(''); //admin@gmail.com
+  const [password, setPassword] = useState(''); //102030
+  const [isSignInError, setIsSignInError] = useState(false);
 
   const { onSignIn, error, isLoading } = useAuthentication();
 
   function handleSignIn() {
+    if (email == '' || password == '') {
+      setIsSignInError(true);
+      return;
+    }
+
+    setIsSignInError(false);
     onSignIn(email, password);
   }
 
@@ -37,6 +44,7 @@ export function SignIn() {
       <ContainerForm as={Animatable.View} animation="fadeInDown">
         <Label testID="lblEmail">Email</Label>
         <Input
+          testID="txtEmail"
           placeholder="Digite seu email"
           onChangeText={setEmail}
           value={email}
@@ -44,24 +52,33 @@ export function SignIn() {
 
         <Label testID="lblPassword">Senha</Label>
         <Input
+          testID="txtPassword"
           placeholder="Digite sua senha"
           onChangeText={setPassword}
           value={password}
           secureTextEntry
         />
 
-        {error && <LabelError>{error?.errorMessage}</LabelError>}
+        {isSignInError && (
+          <LabelError testID="lblError">
+            É necessário preencher os campos email/senha
+          </LabelError>
+        )}
+
+        {error && !isSignInError && (
+          <LabelError testID="lblError">{error?.errorMessage}</LabelError>
+        )}
 
         <SignInButton testID="btnSignIn" onPress={handleSignIn}>
           <TextSignIn testID="lblSignIn">Entrar</TextSignIn>
           {isLoading && <Loading />}
         </SignInButton>
 
-        <ButtonRegister testID="btnRegister">
+        <RegisterButton testID="btnRegister">
           <TextBtnRegister testID="lblRegister">
             Não possui uma conta? Cadastre-se
           </TextBtnRegister>
-        </ButtonRegister>
+        </RegisterButton>
       </ContainerForm>
     </Container>
   );

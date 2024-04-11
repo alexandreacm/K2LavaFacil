@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 
 const Container = styled.View`
     flex: 1;
@@ -26,20 +26,20 @@ const ContainerForm = styled.View`
     padding-right: 5%;
 `;
 
-const ButtonRegister = styled.TouchableOpacity`
+const RegisterButton = styled.TouchableOpacity`
     margin-top: 14px;
     align-self: center;
 `
 
 const TextBtnRegister = styled.Text`
-    color: ${({ theme }) => theme.COLORS.ui.PRIMARY_500}
+    color: ${({ theme }) => theme.COLORS.ui.PRIMARY_500};
 `
 
 const Input = styled.TextInput`
     width: 100%;
     height: 40px;
     border-bottom-width: 1px;
-    font-size: 16px;
+    font-size: ${({ theme }) => theme.SIZES[1]};
     margin-bottom: 16px;
 `;
 
@@ -62,10 +62,15 @@ const TextSignIn = styled.Text`
 `
 
 const LabelError = styled.Text`
-    font-size: 12px;
-    color: ${({ theme }) => theme.COLORS.text.ERROR};
-`;
-
+width: 100%;
+line-height: 20px;
+text-align: left;
+font-size: 16px;
+font-family: ${({ theme }) => theme.FONTS.Rob_300};
+${({ theme }) => css`
+ color: ${theme.COLORS.text.ERROR};
+`}
+`
 
 export {
     Label,
@@ -73,7 +78,7 @@ export {
     HeaderImage,
     ContainerForm,
     SignInButton,
-    ButtonRegister,
+    RegisterButton,
     TextBtnRegister,
     TextSignIn,
     Input,
