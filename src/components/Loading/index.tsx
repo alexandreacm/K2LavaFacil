@@ -7,7 +7,11 @@ export function Loading() {
   const { COLORS } = useTheme();
   return (
     <StyledContainer>
-      <ActivityIndicator size={'small'} color={COLORS.ui.SECONDARY_900} />
+      <ActivityIndicator
+        testID="indicator"
+        size={'small'}
+        color={COLORS.ui.SECONDARY_900}
+      />
     </StyledContainer>
   );
 }

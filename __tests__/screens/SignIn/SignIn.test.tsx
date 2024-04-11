@@ -29,7 +29,7 @@ describe('SIGN_IN', () => {
   });
 
   test('Should validate if email is empty.', () => {
-    const { getByTestId, getByPlaceholderText } = render(<SignIn />, {
+    const { getByTestId } = render(<SignIn />, {
       wrapper: ThemeProviderMock,
     });
 
@@ -41,12 +41,9 @@ describe('SIGN_IN', () => {
   });
 
   test('Should validate if email/password is empty and have a message error', () => {
-    const { getByTestId, getByPlaceholderText, getByText } = render(
-      <SignIn />,
-      {
-        wrapper: ThemeProviderMock,
-      },
-    );
+    const { getByTestId, getByText } = render(<SignIn />, {
+      wrapper: ThemeProviderMock,
+    });
 
     let errorMessage = 'É necessário preencher os campos email/senha';
 

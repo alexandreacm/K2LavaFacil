@@ -12,7 +12,7 @@ const initialValue: IContext = {
   },
   isLoading: false,
   error: { errorCode: 0, errorMessage: '' },
-  onSignIn() {},
+  onSignIn: () => {},
 };
 
 const AuthenticationContext = createContext(initialValue);

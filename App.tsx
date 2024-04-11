@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import Navigation from './src/navigation';
 import { ThemeProvider } from './src/components/ThemeProvider';
 
